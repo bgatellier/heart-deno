@@ -2,11 +2,15 @@ import { Report } from "../report/Report.ts";
 
 import { ModuleInterface } from "./ModuleInterface.ts";
 
+export type Config = {
+  [key: string]: unknown;
+};
+
 /**
  * Define an Analysis module.
  */
 export interface ModuleAnalysisInterface extends ModuleInterface {
-  startAnalysis: (conf: object) => Promise<Report>;
+  startAnalysis: (conf: Config) => Promise<Report>;
 }
 
 /**

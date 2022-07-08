@@ -42,14 +42,13 @@ export class ModuleLoader {
           console.log("Checking missing environment variables...");
         }
 
-        // check if environment variables are missing,
-        // according to the .env.sample of the loaded modules
-        const missingDotEnvVariables = this.handleMissingEnvironmentVariables(
+        // load environment variables according to the .env.sample of the loaded modules
+        const missingEnvironmentVariables = this.loadEnvironmentVariables(
           modulesPaths,
         );
 
-        if (missingDotEnvVariables.length > 0) {
-          throw new MissingEnvironmentVariables(missingDotEnvVariables);
+        if (missingEnvironmentVariables.length > 0) {
+          throw new MissingEnvironmentVariables(missingEnvironmentVariables);
         }
       }
 
@@ -60,48 +59,49 @@ export class ModuleLoader {
   }
 
   /**
-   * Checks variables set in the 'fileName' file from the given loaded modules,
-   * first, if a default can be set, set missing variables to their default value
-   * then, return the ones that are missing from the environment (process.env) variables.
+   * Load the environment variables of the given modules.
+   * If they are not found, set them with the default values if they exist.
+   * Otherwise send them back as missing environment variables.
    */
-  private handleMissingEnvironmentVariables(modulesPaths: string[]): string[] {
-    let missingDotEnvVariables = [];
+  private loadEnvironmentVariables(modulesPaths: string[]): string[] {
+    const missingEnvironmentVariables: string[] = [];
 
     modulesPaths.forEach((modulePath: string) => {
       try {
         // load the .env.sample file from the module
-        const requiredModuleDotenvVariables = Object.entries(
+        const requiredModuleEnvironmentVariables = Object.entries(
           parse(
             Deno.readTextFileSync(modulePath + this.ENVIRONMENT_VARIABLE_MODEL),
-          ),
+          ).env,
         );
 
         // set variables if
         // not yet registered in process.env
         // and having a default value in .env.sample file,
-        requiredModuleDotenvVariables.forEach(
+        requiredModuleEnvironmentVariables.forEach(
           ([variableName, defaultValue]) => {
-            if (!process.env[variableName] && defaultValue.length !== 0) {
-              process.env[variableName] = defaultValue;
+            if (
+              undefined !== Deno.env.get(variableName) &&
+              defaultValue.length !== 0
+            ) {
+              Deno.env.set(variableName, defaultValue);
             }
           },
         );
 
         // get the dotenv variables that are not yet registered in process.env
-        const missingModuleDotEnvVariables = requiredModuleDotenvVariables
-          .filter(([variableName]) => Deno.env.get(variableName));
+        const missingModuleDotEnvVariables = requiredModuleEnvironmentVariables
+          .filter(([variableName]) => undefined !== Deno.env.get(variableName));
 
         // add the missing module dotenv variables to the missing list
-        missingDotEnvVariables = [
-          ...missingDotEnvVariables,
-          ...missingModuleDotEnvVariables,
-        ];
-        // eslint-disable-next-line no-empty
+        missingEnvironmentVariables.push(
+          ...missingModuleDotEnvVariables.map(([variableName]) => variableName),
+        );
         // deno-lint-ignore no-empty
       } catch (_error) {}
     });
 
-    return missingDotEnvVariables;
+    return missingEnvironmentVariables;
   }
 
   /**
@@ -111,48 +111,45 @@ export class ModuleLoader {
     pattern: RegExp,
     packageJsonPath: string,
   ): Promise<string[]> {
-    let packageJson: object;
-
     try {
       // read package.json from this module (Heart CLI)
-      packageJson = await import(packageJsonPath);
-    } catch (_error) {
+      const packageJson = await import(packageJsonPath);
+
+      // list the modules according to the given pattern
+      // look into the 'dependencies' and 'devDependencies' keys
+      const modulesNames: string[] = [];
+      ["dependencies", "devDependencies"]
+        .forEach((key) => {
+          if (packageJson[key]) { // the key exists
+            Object.keys(packageJson[key]).forEach((moduleName) => {
+              // add the module name to the list if it is not already there and matches the pattern
+              if (
+                -1 === modulesNames.indexOf(moduleName) &&
+                pattern.test(moduleName)
+              ) {
+                modulesNames.push(moduleName);
+              }
+            });
+          }
+        });
+
+      // list the absolute path of each modules
+      return modulesNames.map((moduleName) => {
+        const path = `${this.ROOT_PATH}/node_modules/${moduleName}/`;
+
+        if (this.debug) {
+          console.log(`Looking for a module in ${path}`);
+        }
+
+        return path;
+      });
+    } catch (error) {
       if (this.debug) {
         console.error(`package.json not found in ${this.ROOT_PATH}`);
       }
 
-      return Promise.reject([]);
+      return Promise.reject(error);
     }
-
-    // list the modules according to the given pattern
-    // look into the 'dependencies' and 'devDependencies' keys
-    const modulesNames = []["dependencies", "devDependencies"]
-      .forEach((key: string) => {
-        if (packageJson[key]) { // the key exists
-          Object.keys(packageJson[key]).forEach((moduleName: string) => {
-            // add the module name to the list if it is not already there and matches the pattern
-            if (
-              -1 === modulesNames.indexOf(moduleName) &&
-              pattern.test(moduleName)
-            ) {
-              modulesNames.push(moduleName);
-            }
-          });
-        }
-      });
-
-    // list the absolute path of each modules
-    const paths = modulesNames.map((moduleName: string) =>
-      `${this.ROOT_PATH}/node_modules/${moduleName}/`
-    );
-
-    if (this.debug) {
-      paths.forEach((path: string) =>
-        console.log(`Looking for a module in ${path}`)
-      );
-    }
-
-    return paths;
   }
 
   /**

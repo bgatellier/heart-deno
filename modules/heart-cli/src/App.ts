@@ -7,6 +7,7 @@ import {
   ModuleServerInterface,
 } from "@fabernovel/heart-core";
 import { EventEmitter } from "events";
+import { Config } from "../../heart-core/src/model/module/ModuleAnalysisInterface.ts";
 
 export class App {
   private eventEmitter: EventEmitter;
@@ -20,7 +21,7 @@ export class App {
 
   public async startAnalysis(
     module: ModuleAnalysisInterface,
-    conf: object,
+    conf: Config,
   ): Promise<void> {
     try {
       const report = await module.startAnalysis(conf);
@@ -50,13 +51,7 @@ export class App {
     modules: ModuleInterface[],
     port: number,
   ): void {
-    module
-      .startServer(modules, port)
-      .on("listening", () => console.log(`Server listening on port ${port}`))
-      .on("error", (error: Error) => {
-        console.error(error.message);
-        Deno.exit(1);
-      });
+    module.startServer(modules, port);
   }
 
   /**
