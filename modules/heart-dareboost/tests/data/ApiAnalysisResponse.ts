@@ -1,7 +1,7 @@
-import { AnalysisResponseInterface } from '../../src/api/model/AnalysisResponseInterface.ts'
+import { AnalysisResponseInterface } from "../../src/api/model/AnalysisResponseInterface.ts";
 
 export const ApiAnalysisResponse: AnalysisResponseInterface = {
-  status: '',
-  message: '',
-  reportId: ''
-}
+  status: "",
+  message: "",
+  reportId: "",
+};

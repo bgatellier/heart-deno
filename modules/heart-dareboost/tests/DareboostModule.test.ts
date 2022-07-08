@@ -1,56 +1,55 @@
-import { Report } from '@fabernovel/heart-core'
+import { Report } from "@fabernovel/heart-core";
 
-import { DareboostModule } from '../src/DareboostModule.ts'
+import { DareboostModule } from "../src/DareboostModule.ts";
 
-import { ApiAnalysisResponse } from './data/ApiAnalysisResponse.ts'
-import { ApiReportResponse } from './data/ApiReportResponse.ts'
-import { Conf } from './data/Conf.ts'
+import { ApiAnalysisResponse } from "./data/ApiAnalysisResponse.ts";
+import { ApiReportResponse } from "./data/ApiReportResponse.ts";
+import { Conf } from "./data/Conf.ts";
 
-
-const mockLaunchAnalysis = jest.fn().mockResolvedValue(ApiAnalysisResponse)
-const mockGetAnalysisReport = jest.fn().mockResolvedValue(ApiReportResponse)
-jest.mock('../src/api/Client', () => {
+const mockLaunchAnalysis = jest.fn().mockResolvedValue(ApiAnalysisResponse);
+const mockGetAnalysisReport = jest.fn().mockResolvedValue(ApiReportResponse);
+jest.mock("../src/api/Client", () => {
   return jest.fn().mockImplementation(() => {
     return {
       launchAnalysis: mockLaunchAnalysis,
       getAnalysisReport: mockGetAnalysisReport,
-    }
-  })
-})
+    };
+  });
+});
 
-describe('Starts an analysis', () => {
-  let module: DareboostModule
+describe("Starts an analysis", () => {
+  let module: DareboostModule;
 
   beforeEach(() => {
     module = new DareboostModule({
-      name: 'Heart Dareboost Test',
+      name: "Heart Dareboost Test",
       service: {
-        name: 'Dareboost Test'
+        name: "Dareboost Test",
       },
-    })
-  })
+    });
+  });
 
-  it('should starts an analysis with a valid configuration', async () => {
+  it("should starts an analysis with a valid configuration", async () => {
     const REPORT = new Report({
       analyzedUrl: Conf.url,
       date: new Date(ApiReportResponse.report.date),
       note: ApiReportResponse.report.summary.score.toString(),
       resultUrl: ApiReportResponse.report.publicReportUrl,
       service: {
-        name: 'Dareboost Test'
+        name: "Dareboost Test",
       },
-    })
+    });
 
-    const report = await module.startAnalysis(Conf)
+    const report = await module.startAnalysis(Conf);
 
-    expect(report).toStrictEqual(REPORT)
-  })
+    expect(report).toStrictEqual(REPORT);
+  });
 
-  it('should starts an analysis with an invalid configuration', async () => {
+  it("should starts an analysis with an invalid configuration", async () => {
     try {
-      await module.startAnalysis({})
+      await module.startAnalysis({});
     } catch (e) {
-      expect(e).toHaveProperty('error')
+      expect(e).toHaveProperty("error");
     }
-  })
-})
+  });
+});

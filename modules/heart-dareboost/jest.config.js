@@ -16,8 +16,8 @@ module.exports = {
   // A set of global variables that need to be available in all test environments
   globals: {
     "ts-jest": {
-      tsconfig: "tsconfig.test.json"
-    }
+      tsconfig: "tsconfig.test.json",
+    },
   },
 
   // A preset that is used as a base for Jest's configuration
@@ -29,7 +29,7 @@ module.exports = {
   // A list of paths to directories that Jest should use to search for files in
   roots: [
     "<rootDir>/src/",
-    "<rootDir>/tests/"
+    "<rootDir>/tests/",
   ],
 
   // The test environment that will be used for testing

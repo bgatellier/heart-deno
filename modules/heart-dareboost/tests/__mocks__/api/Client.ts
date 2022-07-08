@@ -1,13 +1,17 @@
-import AnalysisResponseInterface from '../../../src/api/model/AnalysisResponseInterface';
-import ReportResponseInterface from '../../../src/api/model/ReportResponseInterface';
+import AnalysisResponseInterface from "../../../src/api/model/AnalysisResponseInterface";
+import ReportResponseInterface from "../../../src/api/model/ReportResponseInterface";
 
 let analysisResponse: AnalysisResponseInterface = null;
 let reportResponse: ReportResponseInterface = null;
-const __setMockAnalysisResponse = (newResponse: AnalysisResponseInterface): void => {
+const __setMockAnalysisResponse = (
+  newResponse: AnalysisResponseInterface,
+): void => {
   analysisResponse = newResponse;
 };
 
-const __setMockReportResponse = (newResponse: ReportResponseInterface): void => {
+const __setMockReportResponse = (
+  newResponse: ReportResponseInterface,
+): void => {
   reportResponse = newResponse;
 };
 

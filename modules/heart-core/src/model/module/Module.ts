@@ -1,15 +1,15 @@
-import { ServiceInterface } from '../service/ServiceInterface.ts'
+import { ServiceInterface } from "../service/ServiceInterface.ts";
 
-import { ModuleInterface } from './ModuleInterface.ts'
+import { ModuleInterface } from "./ModuleInterface.ts";
 
 export abstract class Module implements ModuleInterface {
-  id: string
+  id: string;
 
-  name: string
+  name: string;
 
-  service: ServiceInterface
+  service: ServiceInterface;
 
   protected constructor(module: Partial<ModuleInterface>) {
-    Object.assign(this, module)
+    Object.assign(this, module);
   }
 }

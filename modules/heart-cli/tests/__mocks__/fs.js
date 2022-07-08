@@ -1,9 +1,9 @@
 /**
  * @see https://jestjs.io/docs/en/manual-mocks#examples
  */
-'use strict';
+"use strict";
 
-const fs = jest.genMockFromModule('fs');
+const fs = jest.genMockFromModule("fs");
 
 // This is a custom function that our tests can use during setup to specify
 // what the files on the "mock" filesystem should look like when any of the
@@ -12,7 +12,9 @@ let mockFiles = {};
 function __setMockFiles(newMockFiles) {
   mockFiles = {};
 
-  Object.keys(newMockFiles).forEach((key) => mockFiles[key] = newMockFiles[key]);
+  Object.keys(newMockFiles).forEach((key) =>
+    mockFiles[key] = newMockFiles[key]
+  );
 }
 
 // A custom version of `readdirSync` that reads from the special mocked out
