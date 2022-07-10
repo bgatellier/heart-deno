@@ -1,10 +1,8 @@
 import { AnalysisOptionsValidation } from "../../src/validation/AnalysisOptionsValidation.ts";
 import { assertStrictEquals } from "testing/asserts.ts";
-import { stub,returnsNext } from "testing/mock.ts";
+import { stub,returnsNext, assertSpyCalls } from "testing/mock.ts";
 
-const MOCK_FILE_INFO = {
-  "existingConfig.json": '{"url": "www.my-test.website"}',
-};
+const CONFIG_INLINE = '{"url": "www.my-test.website"}'
 
 Deno.test("Provide no configurations", () => {
   const [errors] = AnalysisOptionsValidation.validate();
@@ -29,8 +27,6 @@ Deno.test("Provide an inline configuration", () => {
 });
 
 Deno.test("Provide missing file configuration", () => {
-  stub(Deno, "readTextFileSync", returnsNext(MOCK_FILE_INFO["existingConfig.json"]));
-
   const [errors, config] = AnalysisOptionsValidation.validate(
     "missingConfig.json"
   );
@@ -40,12 +36,17 @@ Deno.test("Provide missing file configuration", () => {
 });
 
 Deno.test("Provide existing file configuration", () => {
-  stub(Deno, "readTextFileSync", returnsNext(MOCK_FILE_INFO["existingConfig.json"]));
+  const readTextFileSyncStubbed = stub(Deno, "readTextFileSync", returnsNext([CONFIG_INLINE]));
 
-  const [errors, config] = AnalysisOptionsValidation.validate(
-    "existingConfig.json"
-  );
+  try {
+    const [errors, config] = AnalysisOptionsValidation.validate(
+      "existingConfig.json"
+    );
+    assertStrictEquals(errors.length, 0);
+    assertStrictEquals(config, CONFIG_INLINE);
+  } finally {
+    readTextFileSyncStubbed.restore();
+  }
 
-  assertStrictEquals(errors.length, 0);
-  assertStrictEquals(config, MOCK_FILE_INFO["existingConfig.json"]);
+  assertSpyCalls(readTextFileSyncStubbed, 1);
 });
