@@ -1,5 +1,7 @@
 import { stringify } from "querystring";
 
+type Headers = { [index: string]: string }
+
 export class Request {
   private static GET = "GET";
   private static POST = "POST";
@@ -13,22 +15,24 @@ export class Request {
 
   public static async get<T>(
     url: string,
-    headers: HeadersInit | { [index: string]: string } = {},
+    headers: Headers = {},
   ): Promise<T> {
-    return await fetch(url, {
+    const response = await fetch(url, {
       method: Request.GET,
-      headers: { ...Request.BASE_HEADER, ...headers },
-    }).then((res: Response) => res.json());
+      headers: Request.buildHeaders(headers),
+    });
+
+    return response.json();
   }
 
   public static async post<T>(
     url: string,
-    body: object = {},
-    headers: HeadersInit | { [index: string]: string } = {},
+    body: { [key: string]: unknown },
+    headers: Headers = {},
   ): Promise<T> {
     let bodyString = "";
 
-    headers = { ...Request.BASE_HEADER, ...headers };
+    headers = Request.buildHeaders(headers);
     switch (headers[Request.HEADER_CONTENT_TYPE]) {
       case Request.HEADER_CONTENT_TYPE_JSON:
         bodyString = JSON.stringify(body);
@@ -44,10 +48,16 @@ export class Request {
         break;
     }
 
-    return await fetch(url, {
+    const response = await fetch(url, {
       method: Request.POST,
       body: bodyString,
       headers,
-    }).then((res: Response) => res.json());
+    });
+
+    return response.json();
+  }
+
+  private static buildHeaders(headers: Headers = {}): Headers {
+    return { ...Request.BASE_HEADER, ...headers }
   }
 }

@@ -8,21 +8,22 @@ import {
 
 import { ReportResponseInterface } from "./api/model/ReportResponseInterface.ts";
 import { Client } from "./api/Client.ts";
+import { Config } from "../../heart-core/src/model/module/ModuleAnalysisInterface.ts";
 
 export class DareboostModule extends Module implements ModuleAnalysisInterface {
   private readonly MAX_TRIES = 500;
   private readonly TIME_BETWEEN_TRIES = 5000;
 
-  private conf: object;
-  private apiClient: Client;
+  private conf!: Config;
+  private readonly apiClient: Client;
 
-  constructor(module: Partial<ModuleInterface>) {
+  constructor(module: Pick<ModuleInterface, 'name' | 'service'>) {
     super(module);
 
     this.apiClient = new Client();
   }
 
-  public async startAnalysis(conf: object): Promise<Report> {
+  public async startAnalysis(conf: Config): Promise<Report> {
     this.conf = conf;
 
     try {
@@ -62,7 +63,7 @@ export class DareboostModule extends Module implements ModuleAnalysisInterface {
 
       case 200:
         return new Report({
-          analyzedUrl: this.conf["url"],
+          analyzedUrl: this.conf["url"] as string,
           date: new Date(reportResponse.report.date),
           service: this.service,
           resultUrl: reportResponse.report.publicReportUrl,

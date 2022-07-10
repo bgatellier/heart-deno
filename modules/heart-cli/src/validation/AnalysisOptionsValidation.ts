@@ -6,8 +6,8 @@ export class AnalysisOptionsValidation {
    * @returns The list of errors and the analysis configuration
    */
   public static validate(
-    configFile: string,
-    configInline: string,
+    configFile?: string,
+    configInline?: string,
   ): [string[], string] {
     let config = "";
     const errors: string[] = [];
@@ -25,8 +25,8 @@ export class AnalysisOptionsValidation {
     if (configInline) {
       config = configInline;
     } else { // file: load file from the given path
-      const path = isAbsolute(configFile)
-        ? configFile
+      const path = isAbsolute(configFile as string)
+        ? configFile as string
         : `${Deno.cwd()}/${configFile}`;
 
       try {

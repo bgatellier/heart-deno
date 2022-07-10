@@ -1,32 +1,23 @@
-import { Request } from "@fabernovel/heart-core";
-import { mocked } from "ts-jest/utils";
-
+import { assertStrictEquals } from "testing/asserts.ts";
 import { AnalysisResponseInterface } from "../../src/api/model/AnalysisResponseInterface.ts";
 import { ReportResponseInterface } from "../../src/api/model/ReportResponseInterface.ts";
 import { Client } from "../../src/api/Client.ts";
 
-jest.mock("@fabernovel/heart-core");
-const mockedRequest = mocked(Request, true);
-
-describe("Launch analysis", () => {
+Deno.test("should launch an analysis", async () => {
   const ANALYSIS: AnalysisResponseInterface = {
     status: "",
     message: "",
     reportId: "",
   };
+  const CONF = { url: "www.website.test" };
 
-  it("should launch an analysis", async () => {
-    const CONF = { url: "www.website.test" };
-    mockedRequest.post.mockResolvedValue(ANALYSIS);
+  const client = new Client();
+  const scan = await client.launchAnalysis(CONF);
 
-    const client = new Client();
-    const scan = await client.launchAnalysis(CONF);
-
-    expect(scan).toStrictEqual(ANALYSIS);
-  });
+  assertStrictEquals(scan, ANALYSIS);
 });
 
-describe("Get anaysis report", () => {
+Deno.test("should retrieve the analysis report", async () => {
   const REPORT: ReportResponseInterface = {
     status: 0,
     message: "",
@@ -126,12 +117,8 @@ describe("Get anaysis report", () => {
     },
   };
 
-  it("should retrieve the analysis report", async () => {
-    mockedRequest.post.mockResolvedValue(REPORT);
+  const client = new Client();
+  const report = await client.getAnalysisReport("");
 
-    const client = new Client();
-    const report = await client.getAnalysisReport("");
-
-    expect(report).toStrictEqual(REPORT);
-  });
+  assertStrictEquals(report, REPORT);
 });

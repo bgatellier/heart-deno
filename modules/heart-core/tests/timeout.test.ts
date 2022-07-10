@@ -1,11 +1,17 @@
+import { assertSpyCalls, spy } from "testing/mock.ts";
 import { timeout } from "../src/time/timeout.ts";
+import { FakeTime } from "testing/time.ts";
 
-jest.useFakeTimers();
-jest.spyOn(global, "setTimeout");
+Deno.test("should run a real timeout", async () => {
+  const time = new FakeTime();
+  const timeoutSpy = spy(timeout);
 
-it("should run a real timeout", () => {
-  timeout(30);
-
-  expect(setTimeout).toHaveBeenCalledTimes(1);
-  expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 30);
+  try {
+    await timeout(500);
+    assertSpyCalls(timeoutSpy, 0);
+    time.tick(500);
+    assertSpyCalls(timeoutSpy, 1);
+  } finally {
+    time.restore();
+  }
 });

@@ -1,57 +1,51 @@
 import { AnalysisOptionsValidation } from "../../src/validation/AnalysisOptionsValidation.ts";
+import { assertStrictEquals } from "testing/asserts.ts";
+import { stub,returnsNext } from "testing/mock.ts";
 
-jest.mock("fs");
+const MOCK_FILE_INFO = {
+  "existingConfig.json": '{"url": "www.my-test.website"}',
+};
 
-test("Provide no configurations", () => {
-  const [errors] = AnalysisOptionsValidation.validate(undefined, undefined);
+Deno.test("Provide no configurations", () => {
+  const [errors] = AnalysisOptionsValidation.validate();
 
-  expect(errors.length).toBe(1);
+  assertStrictEquals(errors.length, 1);
 });
 
-test("Provide two configurations", () => {
-  const [errors] = AnalysisOptionsValidation.validate("", "");
+Deno.test("Provide two configurations", () => {
+  const [errors] = AnalysisOptionsValidation.validate();
 
-  expect(errors.length).toBe(1);
+  assertStrictEquals(errors.length, 1);
 });
 
-test("Provide an inline configuration", () => {
+Deno.test("Provide an inline configuration", () => {
   const [errors, config] = AnalysisOptionsValidation.validate(
     undefined,
     '{"inline": "configuration"}',
   );
 
-  expect(errors.length).toBe(0);
-  expect(config).toBe('{"inline": "configuration"}');
+  assertStrictEquals(errors.length, 0);
+  assertStrictEquals(config, '{"inline": "configuration"}');
 });
 
-describe("Provide a file configuration", () => {
-  const MOCK_FILE_INFO = {
-    "existingConfig.json": '{"url": "www.my-test.website"}',
-  };
+Deno.test("Provide missing file configuration", () => {
+  stub(Deno, "readTextFileSync", returnsNext(MOCK_FILE_INFO["existingConfig.json"]));
 
-  beforeEach(() => {
-    // Set up some mocked out file info before each test
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    require("fs").__setMockFiles(MOCK_FILE_INFO);
-  });
+  const [errors, config] = AnalysisOptionsValidation.validate(
+    "missingConfig.json"
+  );
 
-  test("Provide missing file configuration", () => {
-    const [errors, config] = AnalysisOptionsValidation.validate(
-      "missingConfig.json",
-      undefined,
-    );
+  assertStrictEquals(errors.length, 1);
+  assertStrictEquals(config, "");
+});
 
-    expect(errors.length).toBe(1);
-    expect(config).toBe("");
-  });
+Deno.test("Provide existing file configuration", () => {
+  stub(Deno, "readTextFileSync", returnsNext(MOCK_FILE_INFO["existingConfig.json"]));
 
-  test("Provide existing file configuration", () => {
-    const [errors, config] = AnalysisOptionsValidation.validate(
-      "existingConfig.json",
-      undefined,
-    );
+  const [errors, config] = AnalysisOptionsValidation.validate(
+    "existingConfig.json"
+  );
 
-    expect(errors.length).toBe(0);
-    expect(config).toBe(MOCK_FILE_INFO["existingConfig.json"]);
-  });
+  assertStrictEquals(errors.length, 0);
+  assertStrictEquals(config, MOCK_FILE_INFO["existingConfig.json"]);
 });

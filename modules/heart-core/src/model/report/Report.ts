@@ -2,6 +2,8 @@ import { ServiceInterface } from "../service/ServiceInterface.ts";
 
 import { ReportInterface } from "./ReportInterface.ts";
 
+type ReportArgs = Omit<ReportInterface, 'normalizedNote'> & Partial<Pick<ReportInterface, 'normalizedNote'>>
+
 /**
  * Define an analysis report that is shared between every Heart module.
  *
@@ -14,11 +16,14 @@ export class Report implements ReportInterface {
   note: string;
   normalizedNote: number;
   resultUrl?: string;
-  service: ServiceInterface;
+  service?: ServiceInterface;
 
-  constructor(report: Partial<ReportInterface>) {
-    Object.assign(this, report);
-
-    this.normalizedNote = this.normalizedNote || parseInt(report.note, 10) || 0;
+  constructor(report: ReportArgs) {
+    this.analyzedUrl = report.analyzedUrl;
+    this.date = report.date;
+    this.note = report.note;
+    this.normalizedNote = report.normalizedNote || parseInt(report.note, 10) || 0;
+    this.resultUrl = report.resultUrl;
+    this.service = report.service;
   }
 }

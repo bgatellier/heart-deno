@@ -3,34 +3,32 @@ import {
   ModuleListenerInterface,
   Report,
 } from "@fabernovel/heart-core";
+import { assertSpyCalls, spy } from "testing/mock.ts";
 
 import { App } from "../src/App.ts";
 
-test("Register events from Listener modules", () => {
+Deno.test("Register events from Listener modules", () => {
   const module: ModuleListenerInterface = {
     id: "test-listener",
     name: "Heart Test Listener",
     service: {
       name: "Test Listener",
     },
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
     registerEvents: () => {},
   };
 
-  const registerEventsMock = jest.spyOn(module, "registerEvents");
+  const registerEventsSpy = spy(module, "registerEvents");
 
   new App([module]);
 
-  expect(registerEventsMock).toHaveBeenCalled();
-
-  registerEventsMock.mockRestore();
+  assertSpyCalls(registerEventsSpy, 1);
 });
 
-test("Displays the results of an analysis", async () => {
+Deno.test("Displays the results of an analysis", async () => {
   const report = new Report({
-    analyzedUrl: "www.my-awesome-website",
+    analyzedUrl: "https://heart.fabernovel.com",
+    date: new Date(),
     note: "50",
-    normalizedNote: 50,
   });
 
   const module: ModuleAnalysisInterface = {
@@ -42,15 +40,12 @@ test("Displays the results of an analysis", async () => {
     startAnalysis: () => new Promise((resolve) => resolve(report)),
   };
 
-  const startAnalysisMock = jest.spyOn(module, "startAnalysis");
-  const consoleLogMock = jest.spyOn(global.console, "log");
+  const startAnalysisSpy = spy(module, "startAnalysis");
+  const consoleLogSpy = spy(console, "log");
 
   const app = new App([module]);
   await app.startAnalysis(module, {});
 
-  expect(startAnalysisMock).toHaveBeenCalled();
-  expect(consoleLogMock).toHaveBeenCalled();
-
-  consoleLogMock.mockRestore();
-  startAnalysisMock.mockRestore();
+  assertSpyCalls(startAnalysisSpy, 1);
+  assertSpyCalls(consoleLogSpy, 1);
 });

@@ -7,6 +7,7 @@
     "fs": "https://deno.land/std@0.144.0/fs/mod.ts",
     "http": "https://deno.land/std@0.144.0/http/mod.ts",
     "path": "https://deno.land/std@0.144.0/path/mod.ts",
-    "querystring": "https://deno.land/x/querystring@v1.0.2/mod.js"
+    "querystring": "https://deno.land/x/querystring@v1.0.2/mod.js",
+    "testing/": "https://deno.land/std@0.147.0/testing/"
   }
 }

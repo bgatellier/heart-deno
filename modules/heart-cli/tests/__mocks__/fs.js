@@ -21,7 +21,7 @@ function __setMockFiles(newMockFiles) {
 // file list set via __setMockFiles
 function readFileSync(fileName) {
   const filesFound = Object.keys(mockFiles).filter((file) => {
-    return (new RegExp(`${file}$`)).test(fileName);
+    return (new RegExp(`${file}$`)).Deno.test(fileName);
   });
 
   if (filesFound.length !== 1) {

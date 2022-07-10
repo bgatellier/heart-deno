@@ -27,11 +27,13 @@ export {
   isModuleAnalysis,
   isModuleListener,
   isModuleServer,
-  Module,
+  Module,Report,
+  Request
+};
+
+export type {
   ModuleAnalysisInterface,
   ModuleInterface,
   ModuleListenerInterface,
-  ModuleServerInterface,
-  Report,
-  Request,
+  ModuleServerInterface
 };

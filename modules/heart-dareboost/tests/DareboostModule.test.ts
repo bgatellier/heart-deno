@@ -1,55 +1,44 @@
 import { Report } from "@fabernovel/heart-core";
+import { assertObjectMatch, assertStrictEquals } from "testing/asserts.ts";
 
 import { DareboostModule } from "../src/DareboostModule.ts";
 
-import { ApiAnalysisResponse } from "./data/ApiAnalysisResponse.ts";
 import { ApiReportResponse } from "./data/ApiReportResponse.ts";
 import { Conf } from "./data/Conf.ts";
 
-const mockLaunchAnalysis = jest.fn().mockResolvedValue(ApiAnalysisResponse);
-const mockGetAnalysisReport = jest.fn().mockResolvedValue(ApiReportResponse);
-jest.mock("../src/api/Client", () => {
-  return jest.fn().mockImplementation(() => {
-    return {
-      launchAnalysis: mockLaunchAnalysis,
-      getAnalysisReport: mockGetAnalysisReport,
-    };
+Deno.test("should starts an analysis with a valid configuration", async () => {
+  const module = new DareboostModule({
+    name: "Heart Dareboost Test",
+    service: {
+      name: "Dareboost Test",
+    },
   });
+  const REPORT = new Report({
+    analyzedUrl: Conf.url,
+    date: new Date(ApiReportResponse.report.date),
+    note: ApiReportResponse.report.summary.score.toString(),
+    resultUrl: ApiReportResponse.report.publicReportUrl,
+    service: {
+      name: "Dareboost Test",
+    },
+  });
+
+  const report = await module.startAnalysis(Conf);
+
+  assertStrictEquals(report, REPORT);
 });
 
-describe("Starts an analysis", () => {
-  let module: DareboostModule;
-
-  beforeEach(() => {
-    module = new DareboostModule({
-      name: "Heart Dareboost Test",
-      service: {
-        name: "Dareboost Test",
-      },
-    });
+Deno.test("should starts an analysis with an invalid configuration", async () => {
+  const module = new DareboostModule({
+    name: "Heart Dareboost Test",
+    service: {
+      name: "Dareboost Test",
+    },
   });
 
-  it("should starts an analysis with a valid configuration", async () => {
-    const REPORT = new Report({
-      analyzedUrl: Conf.url,
-      date: new Date(ApiReportResponse.report.date),
-      note: ApiReportResponse.report.summary.score.toString(),
-      resultUrl: ApiReportResponse.report.publicReportUrl,
-      service: {
-        name: "Dareboost Test",
-      },
-    });
-
-    const report = await module.startAnalysis(Conf);
-
-    expect(report).toStrictEqual(REPORT);
-  });
-
-  it("should starts an analysis with an invalid configuration", async () => {
-    try {
-      await module.startAnalysis({});
-    } catch (e) {
-      expect(e).toHaveProperty("error");
-    }
-  });
+  try {
+    await module.startAnalysis({});
+  } catch (e) {
+    assertObjectMatch(e, {"error": ""});
+  }
 });
