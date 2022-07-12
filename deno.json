@@ -1,3 +1,6 @@
 {
-  "importMap": "import_map.json"
+  "importMap": "import_map.json",
+  "tasks": {
+    "heart": "deno run --allow-read --allow-env ./modules/heart-cli/src/index.ts"
+  }
 }
