@@ -17,10 +17,17 @@ export class DareboostModule extends Module implements ModuleAnalysisInterface {
   private conf!: Config;
   private readonly apiClient: Client;
 
-  constructor(module: Pick<ModuleInterface, 'name' | 'service'>) {
+  constructor(module: Pick<ModuleInterface, "name" | "service">) {
     super(module);
 
     this.apiClient = new Client();
+  }
+
+  /**
+   * Allow stubbitests stubbing
+   */
+  public getApiClient(): Client {
+    return this.apiClient;
   }
 
   public async startAnalysis(conf: Config): Promise<Report> {
@@ -58,7 +65,7 @@ export class DareboostModule extends Module implements ModuleAnalysisInterface {
   ): Promise<Report> {
     switch (reportResponse.status) {
       case 202:
-        await Helper.timeout(this.TIME_BETWEEN_TRIES);
+        await Helper.wait(this.TIME_BETWEEN_TRIES);
         return this.requestReport(reportId, ++triesQty);
 
       case 200:

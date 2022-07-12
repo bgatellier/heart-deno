@@ -7,8 +7,10 @@ export abstract class Module implements ModuleInterface {
   name: string;
   service: ServiceInterface;
 
-  protected constructor({ name, service}: Pick<ModuleInterface, 'name' | 'service'>) {
-    this.name = name
-    this.service = service
+  protected constructor(
+    { name, service }: Pick<ModuleInterface, "name" | "service">,
+  ) {
+    this.name = name;
+    this.service = service;
   }
 }

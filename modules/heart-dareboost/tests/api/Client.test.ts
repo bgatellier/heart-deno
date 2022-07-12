@@ -1,7 +1,10 @@
-import { assertStrictEquals } from "testing/asserts.ts";
+import { assertEquals } from "testing/asserts.ts";
 import { AnalysisResponseInterface } from "../../src/api/model/AnalysisResponseInterface.ts";
 import { ReportResponseInterface } from "../../src/api/model/ReportResponseInterface.ts";
 import { Client } from "../../src/api/Client.ts";
+import { assertSpyCalls, returnsNext, stub } from "testing/mock.ts";
+import { ApiAnalysisResponse } from "../data/ApiAnalysisResponse.ts";
+import { ApiReportResponse } from "../data/ApiReportResponse.ts";
 
 Deno.test("should launch an analysis", async () => {
   const ANALYSIS: AnalysisResponseInterface = {
@@ -12,20 +15,32 @@ Deno.test("should launch an analysis", async () => {
   const CONF = { url: "www.website.test" };
 
   const client = new Client();
-  const scan = await client.launchAnalysis(CONF);
+  const launchAnalysisStubbed = stub(
+    client,
+    "launchAnalysis",
+    returnsNext([Promise.resolve(ApiAnalysisResponse)]),
+  );
 
-  assertStrictEquals(scan, ANALYSIS);
+  try {
+    const analysisResponse = await client.launchAnalysis(CONF);
+
+    assertEquals<AnalysisResponseInterface>(analysisResponse, ANALYSIS);
+  } finally {
+    launchAnalysisStubbed.restore();
+  }
+
+  assertSpyCalls(launchAnalysisStubbed, 1);
 });
 
 Deno.test("should retrieve the analysis report", async () => {
   const REPORT: ReportResponseInterface = {
-    status: 0,
+    status: 200,
     message: "",
     missing: [],
     report: {
       publicReportUrl: "",
       harFileUrl: "",
-      date: 0,
+      date: 1584540399,
       url: "",
       lang: "",
       config: {
@@ -42,8 +57,8 @@ Deno.test("should retrieve the analysis report", async () => {
         latency: 0,
         isPrivate: true,
         screen: {
-          height: 800,
-          width: 600,
+          height: 0,
+          width: 0,
         },
         basicAuth: {
           user: "",
@@ -118,7 +133,19 @@ Deno.test("should retrieve the analysis report", async () => {
   };
 
   const client = new Client();
-  const report = await client.getAnalysisReport("");
+  const getAnalysisReportStubbed = stub(
+    client,
+    "getAnalysisReport",
+    returnsNext([Promise.resolve(ApiReportResponse)]),
+  );
 
-  assertStrictEquals(report, REPORT);
+  try {
+    const report = await client.getAnalysisReport("");
+
+    assertEquals<ReportResponseInterface>(report, REPORT);
+  } finally {
+    getAnalysisReportStubbed.restore();
+  }
+
+  assertSpyCalls(getAnalysisReportStubbed, 1);
 });

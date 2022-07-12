@@ -15,10 +15,10 @@ import {
   ModuleServerInterface,
 } from "./model/module/ModuleServerInterface.ts";
 import { Report } from "./model/report/Report.ts";
-import { timeout } from "./time/timeout.ts";
+import { wait } from "./time/wait.ts";
 
 const Helper = {
-  timeout,
+  wait,
 };
 
 export {
@@ -27,13 +27,14 @@ export {
   isModuleAnalysis,
   isModuleListener,
   isModuleServer,
-  Module,Report,
-  Request
+  Module,
+  Report,
+  Request,
 };
 
 export type {
   ModuleAnalysisInterface,
   ModuleInterface,
   ModuleListenerInterface,
-  ModuleServerInterface
+  ModuleServerInterface,
 };

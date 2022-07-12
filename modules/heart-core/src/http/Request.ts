@@ -1,6 +1,6 @@
 import { stringify } from "querystring";
 
-type Headers = { [index: string]: string }
+type Headers = { [index: string]: string };
 
 export class Request {
   private static GET = "GET";
@@ -45,7 +45,6 @@ export class Request {
           error: "invalid-header",
           message: "Unsupported header Content-Type",
         });
-        break;
     }
 
     const response = await fetch(url, {
@@ -58,6 +57,6 @@ export class Request {
   }
 
   private static buildHeaders(headers: Headers = {}): Headers {
-    return { ...Request.BASE_HEADER, ...headers }
+    return { ...Request.BASE_HEADER, ...headers };
   }
 }

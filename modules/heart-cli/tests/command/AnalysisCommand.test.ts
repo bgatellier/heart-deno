@@ -9,7 +9,7 @@ Deno.test("Create an analysis command", () => {
   const report = new Report({
     analyzedUrl: "https://heart.fabernovel.com",
     date: new Date(),
-    note: "50"
+    note: "50",
   });
 
   const module: ModuleAnalysisInterface = {

@@ -13,7 +13,7 @@ Deno.test("Create a server command", () => {
     service: {
       name: "Test Server",
     },
-    startServer: () => new Server({ handler: () => new Response()}),
+    startServer: () => new Server({ handler: () => new Response() }),
   };
 
   ServerCommand.create(program, module, () => {});
