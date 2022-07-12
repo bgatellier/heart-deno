@@ -4,7 +4,7 @@ import {
   isModuleServer,
   ModuleInterface,
 } from "@fabernovel/heart-core";
-import { parse } from "dotenv";
+import { config, parse } from "dotenv";
 
 import { MissingEnvironmentVariables } from "../error/MissingEnvironmentVariables.ts";
 
@@ -32,15 +32,22 @@ export class ModuleLoader {
       // retrieve the paths of @fabernovel/heart-* modules, except heart-cli and heart-core.
       // (Heart Core must not be installed as an npm package, but who knows ¯\_(ツ)_/¯)
       // paths are guessed according to the content of the package.json
-      const modulesPaths = await this.getPaths(
+      const denoJson = JSON.parse(
+        Deno.readTextFileSync(`${this.ROOT_PATH}/deno.json`),
+      );
+      const modulesNamesAndPaths = await this.getNamesAndPaths(
         new RegExp(`^${this.PACKAGE_PREFIX}(?!cli|core)`),
-        `${this.ROOT_PATH}/package.json`,
+        `${this.ROOT_PATH}/${denoJson.importMap}`,
       );
 
-      if (modulesPaths.length > 0) {
+      if (modulesNamesAndPaths.length > 0) {
         if (this.debug) {
           console.log("Checking missing environment variables...");
         }
+
+        const modulesPaths = modulesNamesAndPaths.map(([_, modulePath]) =>
+          modulePath
+        );
 
         // load environment variables according to the .env.sample of the loaded modules
         const missingEnvironmentVariables = this.loadEnvironmentVariables(
@@ -52,7 +59,10 @@ export class ModuleLoader {
         }
       }
 
-      return this.loadModules(modulesPaths);
+      const modulesNames = modulesNamesAndPaths.map(([moduleName]) =>
+        moduleName
+      );
+      return this.loadModules(modulesNames);
     } catch (error) {
       return Promise.reject(error);
     }
@@ -66,18 +76,25 @@ export class ModuleLoader {
   private loadEnvironmentVariables(modulesPaths: string[]): string[] {
     const missingEnvironmentVariables: string[] = [];
 
+    // load environment variables from a .env file
+    // assume that the root path if the one from where the script has been called
+    // /!\ this approach does not follow symlink
+    config({ path: `${this.ROOT_PATH}/.env`, export: true });
+
     modulesPaths.forEach((modulePath: string) => {
       try {
         // load the .env.sample file from the module
         const requiredModuleEnvironmentVariables = Object.entries(
           parse(
-            Deno.readTextFileSync(modulePath + this.ENVIRONMENT_VARIABLE_MODEL),
+            Deno.readTextFileSync(
+              this.ROOT_PATH +
+                modulePath.substring(0, modulePath.lastIndexOf("src/")) +
+                this.ENVIRONMENT_VARIABLE_MODEL,
+            ),
           ).env,
         );
 
-        // set variables if
-        // not yet registered in process.env
-        // and having a default value in .env.sample file,
+        // set default variables
         requiredModuleEnvironmentVariables.forEach(
           ([variableName, defaultValue]) => {
             if (
@@ -91,7 +108,7 @@ export class ModuleLoader {
 
         // get the dotenv variables that are not yet registered in process.env
         const missingModuleDotEnvVariables = requiredModuleEnvironmentVariables
-          .filter(([variableName]) => undefined !== Deno.env.get(variableName));
+          .filter(([variableName]) => undefined === Deno.env.get(variableName));
 
         // add the missing module dotenv variables to the missing list
         missingEnvironmentVariables.push(
@@ -107,42 +124,19 @@ export class ModuleLoader {
   /**
    * List the Heart modules root path, according to the modules defined in package.json that follows the given pattern.
    */
-  private async getPaths(
+  private getNamesAndPaths(
     pattern: RegExp,
-    packageJsonPath: string,
-  ): Promise<string[]> {
+    importMapPath: string,
+  ): Promise<[string, string][]> {
     try {
-      // read package.json from this module (Heart CLI)
-      const packageJson = await import(packageJsonPath);
+      // read the import map from this module (Heart CLI)
+      const importMap = JSON.parse(Deno.readTextFileSync(importMapPath));
 
-      // list the modules according to the given pattern
-      // look into the 'dependencies' and 'devDependencies' keys
-      const modulesNames: string[] = [];
-      ["dependencies", "devDependencies"]
-        .forEach((key) => {
-          if (packageJson[key]) { // the key exists
-            Object.keys(packageJson[key]).forEach((moduleName) => {
-              // add the module name to the list if it is not already there and matches the pattern
-              if (
-                -1 === modulesNames.indexOf(moduleName) &&
-                pattern.test(moduleName)
-              ) {
-                modulesNames.push(moduleName);
-              }
-            });
-          }
-        });
+      // add the module name to the list if it matches the pattern
+      const modulesNameAndPath = Object.entries<string>(importMap.imports)
+        .filter(([moduleName]) => pattern.test(moduleName));
 
-      // list the absolute path of each modules
-      return modulesNames.map((moduleName) => {
-        const path = `${this.ROOT_PATH}/node_modules/${moduleName}/`;
-
-        if (this.debug) {
-          console.log(`Looking for a module in ${path}`);
-        }
-
-        return path;
-      });
+      return Promise.resolve(modulesNameAndPath);
     } catch (error) {
       if (this.debug) {
         console.error(`package.json not found in ${this.ROOT_PATH}`);
@@ -156,24 +150,21 @@ export class ModuleLoader {
    * Load a list of modules according to their path.
    */
   private async loadModules(
-    modulesPaths: string[],
+    modulesNames: string[],
   ): Promise<ModuleInterface[]> {
     const promises = [];
 
     // do not use the .forEach() method here instead of the for() loop,
     // because the 'await' keyword will not be available.
-    for (let i = 0; i < modulesPaths.length; i++) {
-      const modulePath = modulesPaths[i];
+    for (let i = 0; i < modulesNames.length; i++) {
+      const moduleName = modulesNames[i];
 
-      // read package.json file from the module to look for the module entry point
-      // @see {@link https://docs.npmjs.com/files/package.json#main}
       try {
         if (this.debug) {
-          console.log("Loading module %s...", modulePath);
+          console.log("Loading module %s...", moduleName);
         }
 
-        const packageJson = await import(`${modulePath}package.json`);
-        const pkg = await import(modulePath + packageJson.main);
+        const pkg = await import(moduleName);
         const module = pkg.default;
 
         // only keep the modules that are compatible
@@ -183,12 +174,12 @@ export class ModuleLoader {
         ) {
           // guess the module id from the package name: take the string after the characters "@fabernovel/heart-"
           const matches = (new RegExp(`^${this.PACKAGE_PREFIX}(.+)$`)).exec(
-            packageJson.name,
+            moduleName,
           );
 
           if (null === matches) {
             console.error(
-              `${packageJson.name} module not loaded because the name does not start with ${this.PACKAGE_PREFIX}.`,
+              `${moduleName} module not loaded because the name does not start with ${this.PACKAGE_PREFIX}.`,
             );
           } else {
             module.id = matches[1];
