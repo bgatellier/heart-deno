@@ -1,6 +1,8 @@
 {
   "imports": {
+    "@fabernovel/heart-cli": "./modules/heart-cli/src/index.ts",
     "@fabernovel/heart-core": "./modules/heart-core/src/index.ts",
+    "@fabernovel/heart-dareboost": "./modules/heart-dareboost/src/index.ts",
     "commander": "https://deno.land/x/cmd@v1.2.0/commander/index.ts",
     "dotenv": "https://deno.land/x/dotenv@v3.2.0/mod.ts",
     "events": "https://deno.land/std@0.138.0/node/events.ts",
