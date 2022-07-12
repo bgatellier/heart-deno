@@ -5,11 +5,11 @@
 The detection of the installed modules of Heart in its Node.js version relied on
 package.json files.
 
-As they do not exist inb Deno, the choice has been made to rely on the import
-map mecanism of Deno. Which means:
+As they do not exist in Deno, the choice has been made to rely on the [import
+map mecanism](https://deno.land/manual/linking_to_external_code/import_maps). Which means:
 
 - Installed Heart modules MUST exist in the import map
-- The import map location is specified in the `importMap` property of the
+- The import map location MUST be specified in the `importMap` property of the
   `deno.json` file.
 
 ## Tests
