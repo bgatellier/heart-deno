@@ -6,6 +6,7 @@
     "./modules/heart-cli",
     "./modules/heart-core",
     "./modules/heart-dareboost",
-    "./modules/heart-observatory"
+    "./modules/heart-observatory",
+    "./modules/heart-ssllabs-server"
   ]
 }
