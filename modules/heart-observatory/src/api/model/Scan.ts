@@ -20,7 +20,7 @@ export interface Scan {
   /**
    * the entirety of the HTTP response headers
    */
-  response_headers: object;
+  response_headers: unknown;
 
   /**
    * unique ID number assigned to the scan

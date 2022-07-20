@@ -10,9 +10,10 @@ import { Scan } from "./api/model/Scan.ts";
 import { Client } from "./api/Client.ts";
 import { Config } from "../../heart-core/src/model/module/ModuleAnalysisInterface.ts";
 
+const TIME_BETWEEN_TRIES = 10000;
+
 export class ObservatoryModule extends Module
   implements ModuleAnalysisInterface {
-  private readonly TIME_BETWEEN_TRIES = 10000;
   private config!: Config;
   private readonly apiClient: Client;
 
@@ -59,7 +60,6 @@ export class ObservatoryModule extends Module
     switch (scan.state) {
       case "FAILED":
         throw new Error(scan.state);
-        break;
 
       case "FINISHED":
         return new Report({
@@ -70,12 +70,10 @@ export class ObservatoryModule extends Module
           date: new Date(parseInt(scan.end_time, 10)),
           normalizedNote: scan.score > 100 ? 100 : scan.score,
         });
-        break;
 
       default:
-        await Helper.wait(this.TIME_BETWEEN_TRIES);
+        await Helper.wait(TIME_BETWEEN_TRIES);
         return this.requestScan();
-        break;
     }
   }
 }

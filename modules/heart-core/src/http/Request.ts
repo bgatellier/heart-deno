@@ -2,23 +2,29 @@ import { stringify } from "querystring";
 
 type Headers = { [index: string]: string };
 
-export class Request {
-  private static GET = "GET";
-  private static POST = "POST";
-  public static HEADER_CONTENT_TYPE = "Content-Type";
-  public static HEADER_CONTENT_TYPE_JSON = "application/json";
-  public static HEADER_CONTENT_TYPE_X_WWW_FORM_URLENCODED =
-    "application/x-www-form-urlencoded";
-  private static BASE_HEADER = {
-    [Request.HEADER_CONTENT_TYPE]: Request.HEADER_CONTENT_TYPE_JSON,
-  };
+const GET = "GET";
+const POST = "POST";
+const HEADER_CONTENT_TYPE = "Content-Type";
+const HEADER_CONTENT_TYPE_JSON = "application/json";
+const HEADER_CONTENT_TYPE_X_WWW_FORM_URLENCODED =
+  "application/x-www-form-urlencoded";
+const BASE_HEADER = {
+  [HEADER_CONTENT_TYPE]: HEADER_CONTENT_TYPE_JSON,
+};
 
+export {
+  HEADER_CONTENT_TYPE,
+  HEADER_CONTENT_TYPE_JSON,
+  HEADER_CONTENT_TYPE_X_WWW_FORM_URLENCODED,
+};
+
+export class Request {
   public static async get<T>(
     url: string,
     headers: Headers = {},
   ): Promise<T> {
     const response = await fetch(url, {
-      method: Request.GET,
+      method: GET,
       headers: Request.buildHeaders(headers),
     });
 
@@ -33,11 +39,11 @@ export class Request {
     let bodyString = "";
 
     headers = Request.buildHeaders(headers);
-    switch (headers[Request.HEADER_CONTENT_TYPE]) {
-      case Request.HEADER_CONTENT_TYPE_JSON:
+    switch (headers[HEADER_CONTENT_TYPE]) {
+      case HEADER_CONTENT_TYPE_JSON:
         bodyString = JSON.stringify(body);
         break;
-      case Request.HEADER_CONTENT_TYPE_X_WWW_FORM_URLENCODED:
+      case HEADER_CONTENT_TYPE_X_WWW_FORM_URLENCODED:
         bodyString = stringify(body);
         break;
       default:
@@ -48,7 +54,7 @@ export class Request {
     }
 
     const response = await fetch(url, {
-      method: Request.POST,
+      method: POST,
       body: bodyString,
       headers,
     });
@@ -57,6 +63,6 @@ export class Request {
   }
 
   private static buildHeaders(headers: Headers = {}): Headers {
-    return { ...Request.BASE_HEADER, ...headers };
+    return { ...BASE_HEADER, ...headers };
   }
 }

@@ -2,7 +2,9 @@
 
 ## Why a port to Deno?
 
-This port of [Heart](https://heart.fabernovel.com/) to [Deno](https://deno.land/) aims to be a sandbox for:
+This port of [Heart](https://heart.fabernovel.com/) to
+[Deno](https://deno.land/) aims to be a sandbox for:
+
 - Deno explorations (features, limitations)
 - Codebase simplification, to reduce the learning curve
 - Be the runtime to a future version of Heart? :)

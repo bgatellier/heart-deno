@@ -1,10 +1,10 @@
 import { ModuleServerInterface } from "@fabernovel/heart-core";
 import { Command } from "commander";
 
-export class ServerCommand {
-  private static readonly REGEX_PORT =
-    /^(0|[1-9][0-9]{0,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$/;
+const REGEX_PORT =
+  /^(0|[1-9][0-9]{0,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$/;
 
+export class ServerCommand {
   /**
    * Create a command dedicated to the given server module
    */
@@ -19,7 +19,7 @@ export class ServerCommand {
       .option(
         "-p, --port [port]",
         "Port that the server is listening to",
-        ServerCommand.REGEX_PORT,
+        REGEX_PORT,
         3000,
       )
       .action((cmd: Command) => callback(cmd.port));

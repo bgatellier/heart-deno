@@ -1,4 +1,8 @@
 import { Request } from "@fabernovel/heart-core";
+import {
+  HEADER_CONTENT_TYPE,
+  HEADER_CONTENT_TYPE_X_WWW_FORM_URLENCODED,
+} from "../../../heart-core/src/http/Request.ts";
 import { Config } from "../../../heart-core/src/model/module/ModuleAnalysisInterface.ts";
 import { Error, isError } from "./model/Error.ts";
 
@@ -30,8 +34,7 @@ export class Client {
       this.generateApiUrl(config),
       config,
       {
-        [Request.HEADER_CONTENT_TYPE]:
-          Request.HEADER_CONTENT_TYPE_X_WWW_FORM_URLENCODED,
+        [HEADER_CONTENT_TYPE]: HEADER_CONTENT_TYPE_X_WWW_FORM_URLENCODED,
       },
     );
 
