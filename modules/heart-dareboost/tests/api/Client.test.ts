@@ -14,7 +14,7 @@ Deno.test("should launch an analysis", async () => {
   };
   const CONF = { url: "www.website.test" };
 
-  const client = new Client();
+  const client = new Client({ apiToken: "" });
   const launchAnalysisStubbed = stub(
     client,
     "launchAnalysis",
@@ -132,7 +132,7 @@ Deno.test("should retrieve the analysis report", async () => {
     },
   };
 
-  const client = new Client();
+  const client = new Client({ apiToken: "" });
   const getAnalysisReportStubbed = stub(
     client,
     "getAnalysisReport",

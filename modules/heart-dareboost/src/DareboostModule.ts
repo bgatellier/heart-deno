@@ -20,7 +20,9 @@ export class DareboostModule extends Module implements ModuleAnalysisInterface {
   constructor(module: Pick<ModuleInterface, "name" | "service">) {
     super(module);
 
-    this.apiClient = new Client();
+    this.apiClient = new Client({
+      apiToken: Deno.env.get("DAREBOOST_API_TOKEN") as string
+    });
   }
 
   /**

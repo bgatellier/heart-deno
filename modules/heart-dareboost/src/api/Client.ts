@@ -4,17 +4,21 @@ import { Config } from "../../../heart-core/src/model/module/ModuleAnalysisInter
 import { AnalysisResponseInterface } from "./model/AnalysisResponseInterface.ts";
 import { ReportResponseInterface } from "./model/ReportResponseInterface.ts";
 
+type ClientConfig = {
+  apiToken: string
+}
+
 export class Client {
   private readonly API_URL = "https://www.dareboost.com/api/0.5/";
   private readonly conf: Config;
 
-  constructor() {
-    this.conf = { token: Deno.env.get("DAREBOOST_API_TOKEN") };
+  constructor(config: ClientConfig) {
+    this.conf = { token: config.apiToken };
   }
 
-  public launchAnalysis(conf: Config): Promise<AnalysisResponseInterface> {
+  public launchAnalysis(config: Config): Promise<AnalysisResponseInterface> {
     const options = {
-      ...conf,
+      ...config,
       headers: [{ name: "User-Agent", value: "Dareboost" }],
     };
 
