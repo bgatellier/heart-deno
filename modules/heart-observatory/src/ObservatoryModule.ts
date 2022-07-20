@@ -21,7 +21,7 @@ export class ObservatoryModule extends Module
 
     this.apiClient = new Client({
       analyzeUrl: Deno.env.get("OBSERVATORY_ANALYZE_URL") as string,
-      apiUrl: Deno.env.get("OBSERVATORY_API_URL") as string
+      apiUrl: Deno.env.get("OBSERVATORY_API_URL") as string,
     });
   }
 

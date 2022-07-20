@@ -21,7 +21,7 @@ export class DareboostModule extends Module implements ModuleAnalysisInterface {
     super(module);
 
     this.apiClient = new Client({
-      apiToken: Deno.env.get("DAREBOOST_API_TOKEN") as string
+      apiToken: Deno.env.get("DAREBOOST_API_TOKEN") as string,
     });
   }
 

@@ -10,8 +10,8 @@ import { Config } from "../../heart-core/src/model/module/ModuleAnalysisInterfac
 const ANALYZE_URL = "www.observatory.mozilla-test/results";
 const API_URL = "www.observatory.mozilla-test/api";
 
-Deno.env.set("OBSERVATORY_ANALYZE_URL", ANALYZE_URL)
-Deno.env.set("OBSERVATORY_API_URL", API_URL)
+Deno.env.set("OBSERVATORY_ANALYZE_URL", ANALYZE_URL);
+Deno.env.set("OBSERVATORY_API_URL", API_URL);
 
 const SCAN: Scan = {
   end_time: "1658341082099",

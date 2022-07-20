@@ -5,17 +5,17 @@ import { Error, isError } from "./model/Error.ts";
 import { Scan } from "./model/Scan.ts";
 
 type ClientConfig = {
-  analyzeUrl: string
-  apiUrl: string
-}
+  analyzeUrl: string;
+  apiUrl: string;
+};
 
 export class Client {
-  private analyzeUrl?: string
+  private analyzeUrl?: string;
   private apiUrl?: string;
 
   constructor(config: ClientConfig) {
-    this.analyzeUrl = config.analyzeUrl
-    this.apiUrl = config.apiUrl
+    this.analyzeUrl = config.analyzeUrl;
+    this.apiUrl = config.apiUrl;
   }
 
   public async launchAnalysis(config: Config): Promise<Scan> {
@@ -62,6 +62,8 @@ export class Client {
   }
 
   private generateApiUrl(config: Config): string {
-    return `${this.apiUrl}analyze?host=${config ? config["host"] as string : ""}`;
+    return `${this.apiUrl}analyze?host=${
+      config ? config["host"] as string : ""
+    }`;
   }
 }

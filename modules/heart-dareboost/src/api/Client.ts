@@ -5,8 +5,8 @@ import { AnalysisResponseInterface } from "./model/AnalysisResponseInterface.ts"
 import { ReportResponseInterface } from "./model/ReportResponseInterface.ts";
 
 type ClientConfig = {
-  apiToken: string
-}
+  apiToken: string;
+};
 
 export class Client {
   private readonly API_URL = "https://www.dareboost.com/api/0.5/";
