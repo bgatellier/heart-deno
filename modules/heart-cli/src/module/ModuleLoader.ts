@@ -95,14 +95,14 @@ export class ModuleLoader {
         );
 
         // set default variables
-        requiredModuleEnvironmentVariables.forEach(
+        requiredModuleEnvironmentVariables.filter((
+          [variableName, defaultValue],
+        ) =>
+          undefined === Deno.env.get(variableName) &&
+          defaultValue.length !== 0
+        ).forEach(
           ([variableName, defaultValue]) => {
-            if (
-              undefined !== Deno.env.get(variableName) &&
-              defaultValue.length !== 0
-            ) {
-              Deno.env.set(variableName, defaultValue);
-            }
+            Deno.env.set(variableName, defaultValue);
           },
         );
 
