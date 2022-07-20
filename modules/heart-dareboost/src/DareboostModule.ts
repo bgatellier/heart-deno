@@ -24,7 +24,7 @@ export class DareboostModule extends Module implements ModuleAnalysisInterface {
   }
 
   /**
-   * Allow stubbitests stubbing
+   * Allow tests stubbing
    */
   public getApiClient(): Client {
     return this.apiClient;

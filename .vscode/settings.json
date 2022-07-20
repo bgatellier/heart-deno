@@ -5,6 +5,7 @@
   "deno.enablePaths": [
     "./modules/heart-cli",
     "./modules/heart-core",
-    "./modules/heart-dareboost"
+    "./modules/heart-dareboost",
+    "./modules/heart-observatory"
   ]
 }
