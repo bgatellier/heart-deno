@@ -7,6 +7,7 @@
     "./modules/heart-core",
     "./modules/heart-dareboost",
     "./modules/heart-observatory",
+    "./modules/heart-slack",
     "./modules/heart-ssllabs-server"
   ]
 }
