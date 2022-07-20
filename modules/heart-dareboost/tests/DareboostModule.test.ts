@@ -14,7 +14,7 @@ import { Config } from "../../heart-core/src/model/module/ModuleAnalysisInterfac
 
 const createModuleAndClientStubs = (): [
   DareboostModule,
-  Stub<Client, [conf: Config], Promise<AnalysisResponseInterface>>,
+  Stub<Client, [config: Config], Promise<AnalysisResponseInterface>>,
   Stub<Client, [reportId: string], Promise<ReportResponseInterface>>,
 ] => {
   const module = new DareboostModule({

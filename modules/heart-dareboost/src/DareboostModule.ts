@@ -14,7 +14,7 @@ export class DareboostModule extends Module implements ModuleAnalysisInterface {
   private readonly MAX_TRIES = 500;
   private readonly TIME_BETWEEN_TRIES = 5000;
 
-  private conf!: Config;
+  private config!: Config;
   private readonly apiClient: Client;
 
   constructor(module: Pick<ModuleInterface, "name" | "service">) {
@@ -32,11 +32,11 @@ export class DareboostModule extends Module implements ModuleAnalysisInterface {
     return this.apiClient;
   }
 
-  public async startAnalysis(conf: Config): Promise<Report> {
-    this.conf = conf;
+  public async startAnalysis(config: Config): Promise<Report> {
+    this.config = config;
 
     try {
-      const analysisResponse = await this.apiClient.launchAnalysis(this.conf);
+      const analysisResponse = await this.apiClient.launchAnalysis(this.config);
 
       return this.requestReport(analysisResponse.reportId);
     } catch (error) {
@@ -72,7 +72,7 @@ export class DareboostModule extends Module implements ModuleAnalysisInterface {
 
       case 200:
         return new Report({
-          analyzedUrl: this.conf["url"] as string,
+          analyzedUrl: this.config["url"] as string,
           date: new Date(reportResponse.report.date),
           service: this.service,
           resultUrl: reportResponse.report.publicReportUrl,

@@ -10,10 +10,10 @@ type ClientConfig = {
 
 export class Client {
   private readonly API_URL = "https://www.dareboost.com/api/0.5/";
-  private readonly conf: Config;
+  private readonly config: Config;
 
   constructor(config: ClientConfig) {
-    this.conf = { token: config.apiToken };
+    this.config = { token: config.apiToken };
   }
 
   public launchAnalysis(config: Config): Promise<AnalysisResponseInterface> {
@@ -23,14 +23,14 @@ export class Client {
     };
 
     return Request.post(`${this.API_URL}analysis/launch`, {
-      ...this.conf,
+      ...this.config,
       ...options,
     });
   }
 
   public getAnalysisReport(reportId: string): Promise<ReportResponseInterface> {
     return Request.post(`${this.API_URL}analysis/report`, {
-      ...this.conf,
+      ...this.config,
       reportId,
     });
   }

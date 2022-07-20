@@ -24,8 +24,8 @@ export default class SsllabsServerModule extends Module
     this.apiClient = new Client();
   }
 
-  public async startAnalysis(conf: Config): Promise<Report> {
-    await this.apiClient.launchAnalysis(conf);
+  public async startAnalysis(config: Config): Promise<Report> {
+    await this.apiClient.launchAnalysis(config);
 
     return this.requestReport();
   }

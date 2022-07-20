@@ -10,16 +10,16 @@ const API_URL = "https://api.ssllabs.com/api/v3";
 const SERVICE_URL = "https://www.ssllabs.com/ssltest/analyze.html?d=";
 
 export class Client {
-  private conf!: Config;
+  private config!: Config;
 
-  public launchAnalysis(conf: Config): Promise<Host> {
-    this.conf = conf;
+  public launchAnalysis(config: Config): Promise<Host> {
+    this.config = config;
 
     return this.requestApi();
   }
 
   public getProjectUrl(): string {
-    return typeof this.conf.host === "string" ? this.conf.host : "";
+    return typeof this.config.host === "string" ? this.config.host : "";
   }
 
   public getAnalyzeUrl(): string {
@@ -28,15 +28,15 @@ export class Client {
 
   public getAnalysisReport(): Promise<Host> {
     // avoid starting a new analysis instead of requesting the results
-    if ("string" === typeof this.conf.startNew) {
-      delete this.conf.startNew;
+    if ("string" === typeof this.config.startNew) {
+      delete this.config.startNew;
     }
 
     return this.requestApi();
   }
 
   private generateApiUrl(path: string): string {
-    return `${API_URL}${path}?${stringify(this.conf)}`;
+    return `${API_URL}${path}?${stringify(this.config)}`;
   }
 
   private async requestApi(): Promise<Host> {

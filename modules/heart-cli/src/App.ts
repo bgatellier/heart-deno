@@ -21,10 +21,10 @@ export class App {
 
   public async startAnalysis(
     module: ModuleAnalysisInterface,
-    conf: Config,
+    config: Config,
   ): Promise<void> {
     try {
-      const report = await module.startAnalysis(conf);
+      const report = await module.startAnalysis(config);
 
       // print analyse result
       const reportName = report.service ? `[${report.service.name}] ` : "";

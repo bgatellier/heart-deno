@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 import {
   isModuleAnalysis,
   isModuleServer,
@@ -32,7 +30,7 @@ moduleLoader.load()
         AnalysisCommand.create(
           program,
           module,
-          (conf: Config) => app.startAnalysis(module, conf),
+          (config: Config) => app.startAnalysis(module, config),
         );
       } else if (isModuleServer(module)) {
         ServerCommand.create(

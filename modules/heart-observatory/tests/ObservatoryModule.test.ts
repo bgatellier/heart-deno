@@ -30,8 +30,8 @@ const SCAN: Scan = {
 
 const createModuleAndClientStubs = (): [
   ObservatoryModule,
-  Stub<Client, [conf: Config], Promise<Scan>>,
-  Stub<Client, [conf: Config], Promise<Scan>>,
+  Stub<Client, [config: Config], Promise<Scan>>,
+  Stub<Client, [config: Config], Promise<Scan>>,
 ] => {
   const module = new ObservatoryModule({
     name: "Heart Observatory Test",

@@ -10,7 +10,7 @@ export type Config = {
  * Define an Analysis module.
  */
 export interface ModuleAnalysisInterface extends ModuleInterface {
-  startAnalysis: (conf: Config) => Promise<Report>;
+  startAnalysis: (config: Config) => Promise<Report>;
 }
 
 /**
