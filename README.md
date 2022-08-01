@@ -35,11 +35,11 @@ Which means:
 
 ### Incompatible modules
 
-- _Heart GreenIT_:
-    
-    This module relies on a third-party library ([GreenIT-Analysis-cli](https://github.com/cnumr/GreenIT-Analysis-cli#a4363a9bcf7630e4a5a4cd264a7da9ec6f34b571)) which is written in _CommonJS_.
-    
-    As this module formatting is not fully supported by Deno yet (2022-08-01) and still requires a huge setup (install Node.js, NPM, the library and some additional configurations with the Deno std/node library), the module will not be ported yet, unfortunately.
+Every module that depends on third-party libraries written in _CommonJS_:
+- _Heart GreenIT_
+- _Heart Lighthouse_
+
+As of 2022-08-01, this module formatting still requires a huge setup to works in Deno (install Node.js, NPM, the library and some additional configurations with the Deno `std/node` library), which goes against the codebase simplification objective.
 
 ### Tests
 
