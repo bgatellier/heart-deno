@@ -9,7 +9,6 @@ import {
 import { Status } from "./api/enum/Status.ts";
 import { Host } from "./api/model/Host.ts";
 import { Client } from "./api/Client.ts";
-import { Config } from "../../heart-core/src/model/module/ModuleAnalysisInterface.ts";
 
 const MAX_TRIES = 100;
 const TIME_BETWEEN_TRIES = 10000; // 10 seconds
@@ -24,7 +23,7 @@ export default class SsllabsServerModule extends Module
     this.apiClient = new Client();
   }
 
-  public async startAnalysis(config: Config): Promise<Report> {
+  public async startAnalysis(config: any): Promise<Report> {
     await this.apiClient.launchAnalysis(config);
 
     return this.requestReport();

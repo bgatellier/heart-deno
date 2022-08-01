@@ -10,11 +10,10 @@ import { assertSpyCalls, returnsNext, Stub, stub } from "testing/mock.ts";
 import { Client } from "../src/api/Client.ts";
 import { AnalysisResponseInterface } from "../src/api/model/AnalysisResponseInterface.ts";
 import { ReportResponseInterface } from "../src/api/model/ReportResponseInterface.ts";
-import { Config } from "../../heart-core/src/model/module/ModuleAnalysisInterface.ts";
 
 const createModuleAndClientStubs = (): [
   DareboostModule,
-  Stub<Client, [config: Config], Promise<AnalysisResponseInterface>>,
+  Stub<Client, [config: any], Promise<AnalysisResponseInterface>>,
   Stub<Client, [reportId: string], Promise<ReportResponseInterface>>,
 ] => {
   const module = new DareboostModule({

@@ -8,13 +8,12 @@ import {
 
 import { Scan } from "./api/model/Scan.ts";
 import { Client } from "./api/Client.ts";
-import { Config } from "../../heart-core/src/model/module/ModuleAnalysisInterface.ts";
 
 const TIME_BETWEEN_TRIES = 10000;
 
 export class ObservatoryModule extends Module
   implements ModuleAnalysisInterface {
-  private config!: Config;
+  private config: any;
   private readonly apiClient: Client;
 
   constructor(module: Pick<ModuleInterface, "name" | "service">) {
@@ -33,7 +32,7 @@ export class ObservatoryModule extends Module
     return this.apiClient;
   }
 
-  public async startAnalysis(config: Config): Promise<Report> {
+  public async startAnalysis(config: any): Promise<Report> {
     this.config = config;
 
     await this.apiClient.launchAnalysis(config);

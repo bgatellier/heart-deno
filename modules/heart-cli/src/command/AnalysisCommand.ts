@@ -1,6 +1,5 @@
 import { ModuleAnalysisInterface } from "@fabernovel/heart-core";
 import { Command } from "commander";
-import { Config } from "../../../heart-core/src/model/module/ModuleAnalysisInterface.ts";
 
 import { AnalysisOptionsValidation } from "../validation/AnalysisOptionsValidation.ts";
 
@@ -11,7 +10,7 @@ export class AnalysisCommand {
   public static create(
     program: Command,
     module: ModuleAnalysisInterface,
-    callback: (config: Config) => void,
+    callback: (config: any) => void,
   ): void {
     program
       .command(module.id)

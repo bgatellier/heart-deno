@@ -7,7 +7,6 @@ import {
   ModuleServerInterface,
 } from "@fabernovel/heart-core";
 import { EventEmitter } from "events";
-import { Config } from "../../heart-core/src/model/module/ModuleAnalysisInterface.ts";
 
 export class App {
   private eventEmitter: EventEmitter;
@@ -21,7 +20,7 @@ export class App {
 
   public async startAnalysis(
     module: ModuleAnalysisInterface,
-    config: Config,
+    config: any,
   ): Promise<void> {
     try {
       const report = await module.startAnalysis(config);

@@ -3,7 +3,6 @@ import {
   HEADER_CONTENT_TYPE,
   HEADER_CONTENT_TYPE_X_WWW_FORM_URLENCODED,
 } from "../../../heart-core/src/http/Request.ts";
-import { Config } from "../../../heart-core/src/model/module/ModuleAnalysisInterface.ts";
 import { Error, isError } from "./model/Error.ts";
 
 import { Scan } from "./model/Scan.ts";
@@ -22,7 +21,7 @@ export class Client {
     this.apiUrl = config.apiUrl;
   }
 
-  public async launchAnalysis(config: Config): Promise<Scan> {
+  public async launchAnalysis(config: any): Promise<Scan> {
     if (undefined === config["host"]) {
       return Promise.reject({
         error: "mandatory-parameter",
@@ -56,15 +55,15 @@ export class Client {
     return scan;
   }
 
-  public getAnalyzeUrl(config: Config): string {
+  public getAnalyzeUrl(config: any): string {
     return this.analyzeUrl + (config ? config["host"] as string : "");
   }
 
-  public getAnalysisReport(config: Config): Promise<Scan> {
+  public getAnalysisReport(config: any): Promise<Scan> {
     return Request.get(this.generateApiUrl(config));
   }
 
-  private generateApiUrl(config: Config): string {
+  private generateApiUrl(config: any): string {
     return `${this.apiUrl}analyze?host=${
       config ? config["host"] as string : ""
     }`;

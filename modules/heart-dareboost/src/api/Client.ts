@@ -1,5 +1,4 @@
 import { Request } from "@fabernovel/heart-core";
-import { Config } from "../../../heart-core/src/model/module/ModuleAnalysisInterface.ts";
 
 import { AnalysisResponseInterface } from "./model/AnalysisResponseInterface.ts";
 import { ReportResponseInterface } from "./model/ReportResponseInterface.ts";
@@ -10,13 +9,13 @@ type ClientConfig = {
 
 export class Client {
   private readonly API_URL = "https://www.dareboost.com/api/0.5/";
-  private readonly config: Config;
+  private readonly config: any;
 
   constructor(config: ClientConfig) {
     this.config = { token: config.apiToken };
   }
 
-  public launchAnalysis(config: Config): Promise<AnalysisResponseInterface> {
+  public launchAnalysis(config: any): Promise<AnalysisResponseInterface> {
     const options = {
       ...config,
       headers: [{ name: "User-Agent", value: "Dareboost" }],

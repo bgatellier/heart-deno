@@ -5,7 +5,6 @@ import { assertEquals, assertObjectMatch } from "testing/asserts.ts";
 import { Scan } from "../src/api/model/Scan.ts";
 import { ObservatoryModule } from "../src/ObservatoryModule.ts";
 import { Client } from "../src/api/Client.ts";
-import { Config } from "../../heart-core/src/model/module/ModuleAnalysisInterface.ts";
 
 const ANALYZE_URL = "www.observatory.mozilla-test/results";
 const API_URL = "www.observatory.mozilla-test/api";
@@ -30,8 +29,8 @@ const SCAN: Scan = {
 
 const createModuleAndClientStubs = (): [
   ObservatoryModule,
-  Stub<Client, [config: Config], Promise<Scan>>,
-  Stub<Client, [config: Config], Promise<Scan>>,
+  Stub<Client, [config: any], Promise<Scan>>,
+  Stub<Client, [config: any], Promise<Scan>>,
 ] => {
   const module = new ObservatoryModule({
     name: "Heart Observatory Test",
