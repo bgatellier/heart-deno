@@ -1,5 +1,4 @@
 import { Report } from "../report/Report.ts";
-
 import { ModuleInterface } from "./ModuleInterface.ts";
 
 /**

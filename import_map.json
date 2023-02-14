@@ -1,11 +1,10 @@
 {
   "imports": {
-    "@fabernovel/heart-cli": "./modules/heart-cli/src/index.ts",
-    "@fabernovel/heart-core": "./modules/heart-core/src/index.ts",
-    "@fabernovel/heart-dareboost": "./modules/heart-dareboost/src/index.ts",
-    "@fabernovel/heart-observatory": "./modules/heart-observatory/src/index.ts",
-    "@fabernovel/heart-slack": "./modules/heart-slack/src/index.ts",
-    "@fabernovel/heart-ssllabs-server": "./modules/heart-ssllabs-server/src/index.ts",
+    "@fabernovel/heart-cli": "./modules/cli/src/index.ts",
+    "@fabernovel/heart-core": "./modules/core/src/index.ts",
+    "@fabernovel/heart-observatory": "./modules/observatory/src/index.ts",
+    "@fabernovel/heart-slack": "./modules/slack/src/index.ts",
+    "@fabernovel/heart-ssllabs-server": "./modules/ssllabs-server/src/index.ts",
     "@slack/web-api": "https://deno.land/x/slack_web_api@6.7.2/mod.js",
     "commander": "https://deno.land/x/cmd@v1.2.0/commander/index.ts",
     "dotenv": "https://deno.land/x/dotenv@v3.2.0/mod.ts",

@@ -1,18 +1,16 @@
 import { Request } from "@fabernovel/heart-core";
 import { stringify } from "querystring";
-
 import { Host } from "./model/Host.ts";
 import { Error, isError } from "./model/Error.ts";
 import { Status } from "./enum/Status.ts";
-import { Config } from "../../../heart-core/src/model/module/ModuleAnalysisInterface.ts";
 
 const API_URL = "https://api.ssllabs.com/api/v3";
 const SERVICE_URL = "https://www.ssllabs.com/ssltest/analyze.html?d=";
 
 export class Client {
-  private config!: Config;
+  private config!: any;
 
-  public launchAnalysis(config: Config): Promise<Host> {
+  public launchAnalysis(config: any): Promise<Host> {
     this.config = config;
 
     return this.requestApi();

@@ -1,6 +1,6 @@
 {
   "importMap": "import_map.json",
   "tasks": {
-    "heart": "deno run --allow-read --allow-env --allow-net ./modules/heart-cli/src/index.ts"
+    "heart": "deno run --allow-read --allow-env --allow-net ./modules/cli/src/index.ts"
   }
 }

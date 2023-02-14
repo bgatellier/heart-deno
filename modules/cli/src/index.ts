@@ -1,15 +1,13 @@
 import {
   isModuleAnalysis,
   isModuleServer,
-  ModuleInterface,
+  ModuleInterface
 } from "@fabernovel/heart-core";
 import { Command } from "commander";
-
+import { App } from "./App.ts";
 import { AnalysisCommand } from "./command/AnalysisCommand.ts";
 import { ServerCommand } from "./command/ServerCommand.ts";
 import { ModuleLoader } from "./module/ModuleLoader.ts";
-import { App } from "./App.ts";
-import { Config } from "../../heart-core/src/model/module/ModuleAnalysisInterface.ts";
 
 const moduleLoader = new ModuleLoader(false);
 
@@ -30,7 +28,7 @@ moduleLoader.load()
         AnalysisCommand.create(
           program,
           module,
-          (config: Config) => app.startAnalysis(module, config),
+          (config) => app.startAnalysis(module, config),
         );
       } else if (isModuleServer(module)) {
         ServerCommand.create(

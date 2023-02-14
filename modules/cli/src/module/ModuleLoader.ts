@@ -5,7 +5,6 @@ import {
   ModuleInterface,
 } from "@fabernovel/heart-core";
 import { config, parse } from "dotenv";
-
 import { MissingEnvironmentVariables } from "../error/MissingEnvironmentVariables.ts";
 
 export class ModuleLoader {
