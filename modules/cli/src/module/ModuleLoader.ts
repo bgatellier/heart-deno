@@ -5,7 +5,7 @@ import {
   ModuleInterface,
 } from "@fabernovel/heart-core";
 import { config, parse } from "dotenv";
-import { parse as parsec } from "jsonc";
+import { JSONValue, parse as parsec } from "jsonc";
 import { MissingEnvironmentVariables } from "../error/MissingEnvironmentVariables.ts";
 
 export class ModuleLoader {
@@ -37,7 +37,7 @@ export class ModuleLoader {
       );
       const modulesNamesAndPaths = await this.getNamesAndPaths(
         new RegExp(`^${this.PACKAGE_PREFIX}(?!cli|core)`),
-        `${this.ROOT_PATH}/${denoJson.importMap}`,
+        denoJson,
       );
 
       if (modulesNamesAndPaths.length > 0) {
@@ -126,14 +126,11 @@ export class ModuleLoader {
    */
   private getNamesAndPaths(
     pattern: RegExp,
-    importMapPath: string,
+    denoJson: JSONValue,
   ): Promise<[string, string][]> {
     try {
-      // read the import map from this module (Heart CLI)
-      const importMap = JSON.parse(Deno.readTextFileSync(importMapPath));
-
       // add the module name to the list if it matches the pattern
-      const modulesNameAndPath = Object.entries<string>(importMap.imports)
+      const modulesNameAndPath = Object.entries<string>(denoJson.imports ?? {})
         .filter(([moduleName]) => pattern.test(moduleName));
 
       return Promise.resolve(modulesNameAndPath);

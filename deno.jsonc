@@ -1,5 +1,23 @@
 {
-  "importMap": "import_map.json",
+  "imports": {
+    "@fabernovel/heart-cli": "./modules/cli/src/index.ts",
+    "@fabernovel/heart-core": "./modules/core/src/index.ts",
+    "@fabernovel/heart-lighthouse": "./modules/lighthouse/src/index.ts",
+    "@fabernovel/heart-observatory": "./modules/observatory/src/index.ts",
+    "@fabernovel/heart-slack": "./modules/slack/src/index.ts",
+    "@fabernovel/heart-ssllabs-server": "./modules/ssllabs-server/src/index.ts",
+    "@slack/web-api": "https://deno.land/x/slack_web_api@6.7.2/mod.js",
+    "chrome-launcher": "npm:chrome-launcher@^0.15.1",
+    "commander": "https://deno.land/x/cmd@v1.2.0/commander/index.ts",
+    "dotenv": "https://deno.land/x/dotenv@v3.2.0/mod.ts",
+    "events": "https://deno.land/std@0.138.0/node/events.ts",
+    "http": "https://deno.land/std@0.144.0/http/mod.ts",
+    "jsonc": "https://deno.land/std@0.176.0/encoding/jsonc.ts",
+    "lighthouse": "npm:lighthouse@^9.6.7",
+    "path": "https://deno.land/std@0.144.0/path/mod.ts",
+    "querystring": "https://deno.land/x/querystring@v1.0.2/mod.js",
+    "testing/": "https://deno.land/std@0.147.0/testing/"
+  },
   "tasks": {
     /**
      * --allow-read is required by 
