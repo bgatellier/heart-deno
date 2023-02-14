@@ -5,6 +5,7 @@ import {
   ModuleInterface,
 } from "@fabernovel/heart-core";
 import { config, parse } from "dotenv";
+import { parse as parsec } from "jsonc";
 import { MissingEnvironmentVariables } from "../error/MissingEnvironmentVariables.ts";
 
 export class ModuleLoader {
@@ -31,8 +32,8 @@ export class ModuleLoader {
       // retrieve the paths of @fabernovel/heart-* modules, except heart-cli and heart-core.
       // (Heart Core must not be installed as an npm package, but who knows ¯\_(ツ)_/¯)
       // paths are guessed according to the content of the package.json
-      const denoJson = JSON.parse(
-        Deno.readTextFileSync(`${this.ROOT_PATH}/deno.json`),
+      const denoJson = parsec(
+        Deno.readTextFileSync(`${this.ROOT_PATH}/deno.jsonc`),
       );
       const modulesNamesAndPaths = await this.getNamesAndPaths(
         new RegExp(`^${this.PACKAGE_PREFIX}(?!cli|core)`),

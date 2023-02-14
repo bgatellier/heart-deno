@@ -1,7 +1,7 @@
 import {
   isModuleAnalysis,
   isModuleServer,
-  ModuleInterface
+  ModuleInterface,
 } from "@fabernovel/heart-core";
 import { Command } from "commander";
 import { App } from "./App.ts";

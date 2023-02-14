@@ -1,5 +1,8 @@
 import { Request } from "@fabernovel/heart-core";
-import { HEADER_CONTENT_TYPE, HEADER_CONTENT_TYPE_X_WWW_FORM_URLENCODED } from "../../../core/src/http/Request.ts";
+import {
+  HEADER_CONTENT_TYPE,
+  HEADER_CONTENT_TYPE_X_WWW_FORM_URLENCODED,
+} from "../../../core/src/http/Request.ts";
 import { Error, isError } from "./model/Error.ts";
 
 import { Scan } from "./model/Scan.ts";
