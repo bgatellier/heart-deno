@@ -1,6 +1,6 @@
-import { Json } from "lighthouse"
+import { Json } from "lighthouse";
 
 export interface Config {
-  url: string
-  config?: Json
+  url: string;
+  config?: Json;
 }
