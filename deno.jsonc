@@ -1,0 +1,12 @@
+{
+  "importMap": "import_map.json",
+  "tasks": {
+    /**
+     * --allow-read is required by 
+     * --allow-env is required by 
+     * --allow-net is required by 
+     * --allow-sys is required by the chrome-laucnher dependency
+     */
+    "heart": "deno run --allow-read --allow-env --allow-net --allow-sys ./modules/cli/src/index.ts"
+  }
+}
