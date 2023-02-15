@@ -186,6 +186,7 @@
     "specifiers": {
       "chrome-launcher@^0.12.0": "chrome-launcher@0.12.0",
       "chrome-launcher@^0.15.1": "chrome-launcher@0.15.1",
+      "lighthouse@^10.0.1": "lighthouse@10.0.1",
       "lighthouse@^9.6.7": "lighthouse@9.6.8"
     },
     "packages": {
@@ -273,6 +274,10 @@
         "integrity": "sha512-gd1kmb21kwNuWr6BQz8fv6GNECPBnUasepcoLbekws23NVBLODdsClRZ+bQ8+9Uomf3Sm3+Vwn0oYG9NvwnJCw==",
         "dependencies": {}
       },
+      "axe-core@4.6.3": {
+        "integrity": "sha512-/BQzOX780JhsxDnPpH4ZiyrJAzcd8AfzFPkv+89veFSr1rcMjuq2JDCwypKaPeB6ljHp9KjXhPpjgCvQlWYuqg==",
+        "dependencies": {}
+      },
       "balanced-match@1.0.2": {
         "integrity": "sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==",
         "dependencies": {}
@@ -328,6 +333,13 @@
           "escape-string-regexp": "escape-string-regexp@4.0.0",
           "is-wsl": "is-wsl@2.2.0",
           "lighthouse-logger": "lighthouse-logger@1.3.0"
+        }
+      },
+      "chromium-bidi@0.4.3_devtools-protocol@0.0.1094867": {
+        "integrity": "sha512-A40H1rdpJqkTdnGhnYDzMhtDdIbkXNFj2wgIfivMXL7LyHFDmBtv1hdyycDhnxtYunbPLDZtTs/n+ZT5j7Vnew==",
+        "dependencies": {
+          "devtools-protocol": "devtools-protocol@0.0.1094867",
+          "mitt": "mitt@3.0.0"
         }
       },
       "cliui@8.0.1": {
@@ -405,6 +417,10 @@
       },
       "define-lazy-prop@2.0.0": {
         "integrity": "sha512-Ds09qNh8yw3khSjiJjiUInaGX9xlqZDY7JVryGxdxV7NPeuqQfplOpQ66yJFZut3jLa5zOwkXw1g9EI2uKh4Og==",
+        "dependencies": {}
+      },
+      "devtools-protocol@0.0.1094867": {
+        "integrity": "sha512-pmMDBKiRVjh0uKK6CT1WqZmM3hBVSgD+N2MrgyV1uNizAZMw4tx6i/RTc+/uCsKSCmg0xXx7arCP/OFcIwTsiQ==",
         "dependencies": {}
       },
       "devtools-protocol@0.0.981744": {
@@ -581,6 +597,41 @@
         "integrity": "sha512-vlCUxxQAB8Nu6LQHqPpDRiMi06Du593/my/6JbMttQeEfJ7pf4OS8obSTh5xSOS80U/O7fq59Q8rQGAUxQatUQ==",
         "dependencies": {}
       },
+      "lighthouse-stack-packs@1.9.1": {
+        "integrity": "sha512-9prq6oMkVHz3GeCkphq4FHXXdj3M/WPiFWUvJAczLYV8j/oTxsgiHSPMqh1KVV11CP0VTxD40hFC0pDfXF+khQ==",
+        "dependencies": {}
+      },
+      "lighthouse@10.0.1": {
+        "integrity": "sha512-vxHggvQPAx5ousLosVzWHTPJ+MpVYee+ojiP0r0ewq8cWAvnzLb6M2EieeBfjjm87shRaj0BB2puC8gFztwXXw==",
+        "dependencies": {
+          "@sentry/node": "@sentry/node@6.19.7",
+          "axe-core": "axe-core@4.6.3",
+          "chrome-launcher": "chrome-launcher@0.15.1",
+          "configstore": "configstore@5.0.1",
+          "csp_evaluator": "csp_evaluator@1.1.1",
+          "enquirer": "enquirer@2.3.6",
+          "http-link-header": "http-link-header@0.8.0",
+          "intl-messageformat": "intl-messageformat@4.4.0",
+          "jpeg-js": "jpeg-js@0.4.4",
+          "js-library-detector": "js-library-detector@6.6.0",
+          "lighthouse-logger": "lighthouse-logger@1.3.0",
+          "lighthouse-stack-packs": "lighthouse-stack-packs@1.9.1",
+          "lodash": "lodash@4.17.21",
+          "lookup-closest-locale": "lookup-closest-locale@6.2.0",
+          "metaviewport-parser": "metaviewport-parser@0.3.0",
+          "open": "open@8.4.1",
+          "parse-cache-control": "parse-cache-control@1.0.1",
+          "ps-list": "ps-list@8.1.1",
+          "puppeteer-core": "puppeteer-core@19.7.0_devtools-protocol@0.0.1094867",
+          "robots-parser": "robots-parser@3.0.0",
+          "semver": "semver@5.7.1",
+          "speedline-core": "speedline-core@1.4.3",
+          "third-party-web": "third-party-web@0.20.2",
+          "ws": "ws@7.5.9",
+          "yargs": "yargs@17.6.2",
+          "yargs-parser": "yargs-parser@21.1.1"
+        }
+      },
       "lighthouse@9.6.8": {
         "integrity": "sha512-5aRSvnqazci8D2oE7GJM6C7IStvUuMVV+74cGyBuS4n4NCixsDd6+uJdX834XiInSfo+OuVbAJCX4Xu6d2+N9Q==",
         "dependencies": {
@@ -645,6 +696,10 @@
         "integrity": "sha512-qL5NtY18LGs7lvZCkj3ep2H4Pes9rIiSLZRUyfDdvVw7pWFA0eLwmqaIxApD74RGvUrNEtk9e5Wt1rT+VlCvGw==",
         "dependencies": {}
       },
+      "metaviewport-parser@0.3.0": {
+        "integrity": "sha512-EoYJ8xfjQ6kpe9VbVHvZTZHiOl4HL1Z18CrZ+qahvLXT7ZO4YTC2JMyt5FaUp9JJp6J4Ybb/z7IsCXZt86/QkQ==",
+        "dependencies": {}
+      },
       "minimatch@3.1.2": {
         "integrity": "sha512-J7p63hRiAjw1NDEww1W7i37+ByIrOWO5XQQAzZ3VOcL0PNybwpfmV/N05zFAzwQ9USyEcX6t3UO+K5aqBQOIHw==",
         "dependencies": {
@@ -653,6 +708,10 @@
       },
       "minimist@0.0.8": {
         "integrity": "sha512-miQKw5Hv4NS1Psg2517mV4e4dYNaO3++hjAvLOAzKqZ61rH8NS1SK+vbfBWZ5PY/Me/bEWhUwqMghEW5Fb9T7Q==",
+        "dependencies": {}
+      },
+      "mitt@3.0.0": {
+        "integrity": "sha512-7dX2/10ITVyqh4aOSVI9gdape+t9l2/8QxHrFmUXu4EEUpdlxl6RudZUPZoc+zuY2hk1j7XxVroIVIan/pD/SQ==",
         "dependencies": {}
       },
       "mkdirp-classic@0.5.3": {
@@ -767,6 +826,22 @@
           "ws": "ws@8.5.0"
         }
       },
+      "puppeteer-core@19.7.0_devtools-protocol@0.0.1094867": {
+        "integrity": "sha512-BU05W24N+fWudCCeWxv/+R9fnMGmS6HCNPJbieoy0S4yAloVOoVDpOnHV8ZpFTGMPTHQ2EuPyZPWA+idPKO0pw==",
+        "dependencies": {
+          "chromium-bidi": "chromium-bidi@0.4.3_devtools-protocol@0.0.1094867",
+          "cross-fetch": "cross-fetch@3.1.5",
+          "debug": "debug@4.3.4",
+          "devtools-protocol": "devtools-protocol@0.0.1094867",
+          "extract-zip": "extract-zip@2.0.1",
+          "https-proxy-agent": "https-proxy-agent@5.0.1",
+          "proxy-from-env": "proxy-from-env@1.1.0",
+          "rimraf": "rimraf@3.0.2",
+          "tar-fs": "tar-fs@2.1.1",
+          "unbzip2-stream": "unbzip2-stream@1.4.3",
+          "ws": "ws@8.11.0"
+        }
+      },
       "readable-stream@3.6.0": {
         "integrity": "sha512-BViHy7LKeTz4oNnkcLJ+lVSL6vpiFeX6/d3oSH8zCW7UxP2onchk+vTGB143xuFjHS3deTgkKoXXymXqymiIdA==",
         "dependencies": {
@@ -862,6 +937,10 @@
         "integrity": "sha512-X9Mha8cVeBwakunlZXkXL6xRzw8VCcDGWqT59EzeTYAJIi8ien3CuufnEGEx4ZUFahumNQdoOwf4H2T9Ca6lBg==",
         "dependencies": {}
       },
+      "third-party-web@0.20.2": {
+        "integrity": "sha512-KFaFBDto+gH2DZW6ooFCGYrR8CGV6b/Ibsc2RTUkKhTPbxOWZuKs0NTftdAMoz0Aivf4bAHgW+kAGKciSQpqFg==",
+        "dependencies": {}
+      },
       "through@2.3.8": {
         "integrity": "sha512-w89qg7PI8wAdvX60bMDP+bFoD5Dvhm9oLheFp5O4a2QF0cSBGsBX4qZmadPMvVqlLJBBci+WqGGOAPvcDeNSVg==",
         "dependencies": {}
@@ -931,6 +1010,10 @@
       },
       "ws@7.5.9": {
         "integrity": "sha512-F+P9Jil7UiSKSkppIiD94dN07AwvFixvLIj1Og1Rl9GGMuNipJnV9JzjD6XuqmAeiswGvUmNLjr5cFuXwNS77Q==",
+        "dependencies": {}
+      },
+      "ws@8.11.0": {
+        "integrity": "sha512-HPG3wQd9sNQoT9xHyNCXoDUa+Xw/VevmY9FoHyQ+g+rrMn4j6FB4np7Z0OhdTgjx6MgQLK7jwSy1YecU1+4Asg==",
         "dependencies": {}
       },
       "ws@8.5.0": {

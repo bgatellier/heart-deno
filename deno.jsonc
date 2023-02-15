@@ -13,7 +13,7 @@
     "events": "https://deno.land/std@0.138.0/node/events.ts",
     "http": "https://deno.land/std@0.144.0/http/mod.ts",
     "jsonc": "https://deno.land/std@0.176.0/encoding/jsonc.ts",
-    "lighthouse": "npm:lighthouse@^9.6.7",
+    "lighthouse": "npm:lighthouse@^10.0.1",
     "path": "https://deno.land/std@0.144.0/path/mod.ts",
     "querystring": "https://deno.land/x/querystring@v1.0.2/mod.js",
     "testing/": "https://deno.land/std@0.147.0/testing/"
