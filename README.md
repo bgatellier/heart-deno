@@ -30,8 +30,8 @@ As these files do not exist in Deno, the choice has been made to rely on the
 Deno >= 1.30. Which means:
 
 - Installed Heart modules MUST exist in the import map
-- The import map location MUST be specified in the `importMap` property of the
-  `deno.json` file.
+- The import map location MUST be specified in the `imports` property of the
+  `deno.jsonc` file.
 
 ### Incompatible modules
 
