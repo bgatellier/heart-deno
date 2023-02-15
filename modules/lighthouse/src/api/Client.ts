@@ -9,8 +9,8 @@ export async function runAnalysis(conf: Config): Promise<any> {
     });
 
     const results = await lighthouse(conf.url, {
-      port: chrome.port,
       output: "json",
+      port: chrome.port,
     }, conf.config);
 
     await chrome.kill();
