@@ -5,6 +5,7 @@
   "deno.enablePaths": [
     "./modules/cli",
     "./modules/core",
+    "./modules/greenit",
     "./modules/lighthouse",
     "./modules/observatory",
     "./modules/slack",
