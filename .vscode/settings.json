@@ -3,11 +3,11 @@
   "deno.lint": true,
   "deno.unstable": false,
   "deno.enablePaths": [
-    "./modules/heart-cli",
-    "./modules/heart-core",
-    "./modules/heart-dareboost",
-    "./modules/heart-observatory",
-    "./modules/heart-slack",
-    "./modules/heart-ssllabs-server"
+    "./modules/cli",
+    "./modules/core",
+    "./modules/lighthouse",
+    "./modules/observatory",
+    "./modules/slack",
+    "./modules/ssllabs-server"
   ]
 }
