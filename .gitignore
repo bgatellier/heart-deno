@@ -1,4 +1,7 @@
 .env
+
+lib/
+
 # moon
 .moon/cache
 .moon/docker
