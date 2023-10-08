@@ -1,5 +1,9 @@
 # https://moonrepo.dev/docs/config/toolchain
 $schema: 'https://moonrepo.dev/schemas/toolchain.json'
 
+# Enable Deno and override default settings
+deno:
+    lockfile: true
+
 # Extend and inherit an external configuration file. Must be a valid HTTPS URL or file system path.
 # extends: './shared/toolchain.yml'
