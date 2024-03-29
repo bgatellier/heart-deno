@@ -1,0 +1,9 @@
+$schema: 'https://moonrepo.dev/schemas/tasks.json'
+
+tasks:
+  format:
+    command: deno fmt
+  lint:
+    command: deno lint
+  test:
+    command: deno test
