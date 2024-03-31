@@ -1,3 +1,5 @@
+import { ReportEntity } from "./entities/ReportEntity.ts";
+import { ServiceEntity } from "./entities/ServiceEntity.ts";
 import { InputError } from "./error/InputError.ts";
 import { get, post } from "./http/Request.ts";
 import type {
@@ -70,7 +72,9 @@ export {
   Module,
   ObservatoryReport,
   ObservatoryScanState,
+  ReportEntity,
   Request,
+  ServiceEntity,
   SsllabsServerReport,
   SsllabsServerStatus,
   validateAnalysisInput,
