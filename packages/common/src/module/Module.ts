@@ -1,4 +1,4 @@
-import type { ModuleMetadata } from "./ModuleMetadata.js";
+import type { ModuleMetadata } from "./ModuleMetadata.ts";
 
 export abstract class Module {
   readonly id: ModuleMetadata["id"];
