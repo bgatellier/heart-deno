@@ -1,6 +1,7 @@
 {
   "deno.enable": true,
   "deno.enablePaths": [
+    "./packages/api",
     "./packages/cli",
     "./packages/common",
   ],
