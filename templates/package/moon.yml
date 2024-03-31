@@ -1,0 +1,14 @@
+dependsOn:
+  - id: 'common'
+    scope: 'production'
+  - id: 'cli'
+    scope: 'peer'
+language: typescript
+project: 
+  name: Heart {{ name | capitalize }}
+  # Customize the description
+  description: Plays a Caravan Palace song at the end of an analysis 🎵
+stack: backend
+tags:
+  - '{{ role }}'
+type: application
