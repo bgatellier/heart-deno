@@ -32,3 +32,5 @@ vcs:
   manager: 'git'
 
   provider: github
+  
+  syncHooks: true
