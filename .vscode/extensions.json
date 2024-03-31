@@ -1,0 +1,6 @@
+{
+  "recommendations": [
+    "moonrepo.moon-console",
+    "denoland.vscode-deno",
+  ]
+}
