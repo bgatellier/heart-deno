@@ -1,0 +1,5 @@
+{
+  "$id": "https://heart.fabernovel.com/schemas/config",
+  "type": "object",
+  "minProperties": 1
+}
