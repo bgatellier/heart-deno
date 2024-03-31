@@ -4,5 +4,6 @@
     "./packages/api",
     "./packages/cli",
     "./packages/common",
+    "./packages/lighthouse",
   ],
 }
