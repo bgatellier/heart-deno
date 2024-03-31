@@ -5,5 +5,3 @@ tasks:
     command: deno fmt
   lint:
     command: deno lint
-  test:
-    command: deno test
