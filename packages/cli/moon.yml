@@ -1,3 +1,4 @@
 language: typescript
 dependsOn:
-  - common
+  - id: 'common'
+    scope: 'production'
