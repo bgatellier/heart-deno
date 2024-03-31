@@ -1,6 +1,6 @@
 # Description
 
-_Heart {{ name | capitalize}}_ is a _{{ role }}_ module of _Heart_, which plays a Caravan Palace song at the end of an analysis 🎵.
+_Heart {{ name | capitalize}}_ is a _{{ role }}_ module of _Heart_, which does amazing things.
 
 Read more about
 [the description and design of _Heart_](https://github.com/bgatellier/heart-deno#readme).

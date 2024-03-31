@@ -16,7 +16,8 @@ variables:
     type: string
     default: ''
     required: true
-    prompt: Package name
+    prompt: Package name (snake-case)
+    order: 1
   role:
     type: enum
     values:
@@ -28,3 +29,4 @@ variables:
         label: React at the end of an analysis
     multiple: false
     prompt: Role of your package
+    order: 2

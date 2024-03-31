@@ -6,8 +6,7 @@ dependsOn:
 language: typescript
 project: 
   name: Heart {{ name | capitalize }}
-  # Customize the description
-  description: Plays a Caravan Palace song at the end of an analysis 🎵
+  description: Does amazing things
 stack: backend
 tags:
   - '{{ role }}'
