@@ -1,3 +1,13 @@
-language: typescript
 dependsOn:
-  - common
+  - id: 'common'
+    scope: 'production'
+  - id: 'cli'
+    scope: 'peer'
+language: typescript
+project: 
+  name: Heart Lighthouse
+  description: Analyses URLs with Google Lighthouse
+stack: backend
+tags:
+  - analysis
+type: application
